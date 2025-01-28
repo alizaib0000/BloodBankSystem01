@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Blood Bank System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+
+
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <!-- Logo Image -->
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Blood Bank System Logo" class="logo-image">
+                <span>Blood Bank System</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/index">Home</a></li>
+                <li><a href= "/features" >Features</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/needblood">Need Blood</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <section class="login-form">
+        <h2>Login to Continue</h2>
+        <form method="POST" action="/login">
+            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/register">Sign up here</a></p>
+    </section>
+
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="popup {% if category == 'error' %}popup-error{% endif %}" id="flashMessage" style="display:block;">
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+
+
+
+
+
+    <footer>
+        <p>&copy; 2024 Blood Bank System</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Blood Bank System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Blood Bank System" class="logo-image">
+                <span>Blood Bank System</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/index">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/needblood">Need Blood</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- About Us Section -->
+        <section>
+            <h1>About Us</h1>
+            <p>We are a dedicated platform committed to bridging the gap between blood donors and recipients.</p>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mission">
+            <h2>Our Mission</h2>
+            <p>To ensure no life is lost due to the lack of blood by creating an efficient, transparent, and accessible system for blood donation and distribution.</p>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <h3>Ali Zaib</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="team-member">
+                    <h3>Fiza Gulzar</h3>
+                    <p>Technical Lead</p>
+                </div>
+                <div class="team-member">
+                    <h3>Zainab Ghazala</h3>
+                    <p>Operations Manager</p>
+                </div>
+            </div>
+        </section>
+    
+
+        <!-- Blood Donation Statistics -->
+        <section class="stats">
+            <h2>Blood Donation Statistics</h2>
+            <p>See the total number of donations and blood availability.</p>
+            <div class="stats-container">
+                <!-- Total Donations -->
+                <div class="stat-item">
+                    <h3>Total Donations</h3>
+                    <p id="total-donations">{{ total_donations }}</p>
+                </div>
+
+                <!-- Donations by Blood Type -->
+                <div class="stat-item">
+                    <h3>Donations by Blood Type</h3>
+                    <ul>
+                        {% for blood_type, count in donation_stats %}
+                        <li>{{ blood_type }}: {{ count }} donations</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2024 Blood Bank System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank System</title>
+
+    <!-- Link to CSS File -->
+    <link href="{{ url_for('static', filename='../static/styles.css') }}" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+
+
+   <!--Start of Tawk.to Script-->
+   <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67861448af5bfec1dbeb38cd/1ihhruf5o';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+ 
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <!-- Logo Image -->
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Blood Bank System Logo" class="logo-image">
+                <span>Blood Bank System</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/index">Home</a></li>
+                <li><a href= "/features" >Features</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/needblood">Need Blood</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="slider">
+        <section class="hero">
+            <h1>Save Lives, Donate Blood Today</h1>
+            <p>Join a community of donors and help those in need.</p>
+
+            <!-- Register Button -->
+            <div class="auth-buttons">
+                <a href="/register" class="register" id="openRegister">Register</a>
+            </div>
+            <!-- Paragraph below Register Button -->
+            <p class="register-info">Register to get access to more features about the Blood Bank System.</p>
+        </section>
+
+        <div class="slides">
+            <!-- Replace background images with correct paths -->
+            <div class="slide" style="background-image: url('{{ url_for('static', filename='images/image2.jpg') }}')" ></div>
+            <div class="slide" style="background-image: url('{{ url_for('static', filename='images/image1.jpg') }}')" ></div>
+            <div class="slide" style="background-image: url('{{ url_for('static', filename='images/image3.jpg') }}')" ></div>
+            <div class="slide" style="background-image: url('{{ url_for('static', filename='images/image4.jpg') }}')" ></div>
+        </div>
+    </section>
+
+    <!-- Donation Tracker -->
+    <section class="donation-tracker">
+        <h2>Help Us Save Lives!</h2>
+        <p>Currently, <span id="donor-count">0</span> people have donated blood. Join the movement!</p>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="filled-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Blood Donation Alerts -->
+    <section class="emergency-alerts">
+        <h2>Emergency Blood Donation Alerts</h2>
+        <p>Get notified for emergency blood donation requests.</p>
+        <button id="subscribe-alerts">Subscribe for Alerts</button>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3>Blood Bank System</h3>
+                <p>Your reliable partner in saving lives through blood donation.</p>
+            </div>
+            <div class="footer-middle">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li>Email: contact@bloodbanksystem.com</li>
+                    <li>Phone: +923352977781</li>
+                    <li>Address: Main Hyderabad to Mirpurkhas Road, Blood Bank System, Mirpurkhas, Pakistan</li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <h4>Follow Us</h4>
+                <ul class="social-links">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Blood Bank System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Link to JS File -->
+    <script src="{{ url_for('static', filename='../static/script.js') }}"></script>
+</body>
+</html>

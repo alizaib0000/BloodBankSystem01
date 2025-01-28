@@ -1,0 +1,387 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 40px;
+    background-color: #ee2603; /* Pink background */
+    color: #fff;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .logo-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-left: 12px;
+}
+
+.navbar .nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 2px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .nav-links li a:hover {
+    background-color: #ee2603; /* Darker pink on hover */
+    border-radius: 5px;
+}
+
+/* Header Section Styles */
+header {
+    background-color: #ee2603;
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+}
+
+/* Section Styles */
+section {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    color: #ee2603;
+    margin-bottom: 15px;
+}
+
+/* Stats Section */
+.stats {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.stat-item {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #444;
+}
+
+.stat-item h3 {
+    font-size: 1.5rem;
+    color: #ee2603;
+}
+
+/* Search Blood Form */
+.search-blood form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-blood form label {
+    display: block;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: bold;
+}
+
+.search-blood form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-blood form button {
+    background-color: #ee2603;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-blood form button:hover {
+    background-color: #e84141;
+}
+
+/* Mission Section */
+.mission {
+    background-color: #ffe0e0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.mission p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* Team Section */
+.team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.team-member {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.team-member h3 {
+    color: #444;
+}
+
+.team-member p {
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Contact Form */
+.contact-form {
+    background-color: #fff;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.contact-form form input,
+.contact-form form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-form form button {
+    display: block;
+    width: 100%;
+    background-color: #ee2603;
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form form button:hover {
+    background-color: #e84141;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #2d3436;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile-First Responsive Design */
+
+/* Navbar */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .navbar .nav-links {
+        display: block;
+        margin-top: 15px;
+    }
+
+    .navbar .nav-links li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .navbar .logo {
+        margin-bottom: 15px;
+    }
+
+    .navbar .logo-image {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Header */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+}
+
+/* Section Styles */
+@media (max-width: 768px) {
+    section {
+        padding: 30px 10px;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Stats Section */
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+        margin-top: 30px;
+    }
+
+    .stat-item {
+        font-size: 1rem;
+    }
+
+    .stat-item h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Search Blood Form */
+@media (max-width: 768px) {
+    .search-blood form {
+        width: 200%;
+    }
+
+    .search-blood form label {
+        font-size: 20.1rem;
+    }
+
+    .search-blood form select,
+    .search-blood form button {
+        font-size: 20rem;
+    }
+}
+
+/* Mission Section */
+@media (max-width: 768px) {
+    .mission p {
+        font-size: 1rem;
+    }
+}
+
+/* Team Section */
+@media (max-width: 768px) {
+    .team {
+        grid-template-columns: 1fr;
+    }
+
+    .team-member {
+        padding: 15px;
+    }
+
+    .team-member h3 {
+        font-size: 1.2rem;
+    }
+
+    .team-member p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Contact Form */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 15px;
+    }
+
+    .contact-form form input,
+    .contact-form form textarea {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .contact-form form button {
+        padding: 20px;
+        font-size: 1rem;
+    }
+}
+
+/* Footer */
+@media (max-width: 768px) {
+    .footer {
+        font-size: 0.8rem;
+    }
+}
