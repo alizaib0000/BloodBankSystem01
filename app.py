@@ -1,6 +1,4 @@
 from flask import Flask, request, redirect, render_template, session, url_for, flash,jsonify
-import mysql.connector
-import pymysql
 from flask_mail import Message,Mail
 
 # Flask App Initialization
