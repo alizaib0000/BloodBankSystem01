@@ -14,9 +14,6 @@ def index():
 app.secret_key = "22852255"  # Required for session management
 
 
-
-
-
 # MySQL Database Connection
 db = pymysql.connect(
     host="localhost",
@@ -24,7 +21,6 @@ db = pymysql.connect(
     password="22852255",
     database="blood_bank_system"
 )
-
 
 
 cursor = db.cursor()
@@ -312,7 +308,5 @@ def logout():
     return redirect(url_for('login'))  # Redirect to login after logout
 
 # debug on host or port 80
-import os
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Ensure PORT is set
-    app.run(host="0.0.0.0", port=port)
+    app.run(host='0.0.0.0' , port = 5000)
