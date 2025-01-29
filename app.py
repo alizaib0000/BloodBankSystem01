@@ -14,13 +14,24 @@ def index():
 app.secret_key = "22852255"  # Required for session management
 
 
-# MySQL Database Connection
-db = pymysql.connect(
-    host="localhost",
-    user="root",
-    password="22852255",
-    database="blood_bank_system"
-)
+
+
+
+# MySQL Configuration using Environment Variables
+db_host = os.getenv("DB_HOST", "localhost")
+db_user = os.getenv("DB_USER", "root")
+db_password = os.getenv("DB_PASSWORD", "22852255")
+db_name = os.getenv("DB_NAME", "bloodbank")
+
+def get_db_connection():
+    return pymysql.connect(
+        host="localhost",
+        user=db_user,
+        password="22852255",
+        database="blood_bank_system"
+        cursorclass=pymysql.cursors.DictCursor
+    )
+
 
 
 cursor = db.cursor()
