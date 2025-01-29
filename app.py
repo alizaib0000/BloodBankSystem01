@@ -240,4 +240,5 @@ def logout():
     return redirect(url_for('login'))  # Redirect to login after logout
 # debug on host or port 80
 if __name__ == "__main__":
-    app.run(host='0.0.0.0' , port = 5000)
+    app.run(host='0.0.0.0', port=8000)
+
