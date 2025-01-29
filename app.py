@@ -321,5 +321,5 @@ def logout():
 # debug on host or port 80
 import os
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 3000))  # Ensure PORT is set
+    port = int(os.environ.get("PORT", 5000))  # Ensure PORT is set
     app.run(host="0.0.0.0", port=port)
