@@ -10,10 +10,10 @@ def index():
 app.secret_key = "22852255"  # Required for session management
 # MySQL Database Connection
 db = pymysql.connect(
-    host="localhost",
-    user="root",
-    password="22852255",
-    database="blood_bank_system"
+    host=os.environ.get("DB_HOST", "localhost"),
+    user=os.environ.get("DB_USER", "root"),
+    password=os.environ.get("DB_PASSWORD", "22852255"),
+    database=os.environ.get("DB_NAME", "blood_bank_system")
 )
 cursor = db.cursor()
 @app.route('/features')
