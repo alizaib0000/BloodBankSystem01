@@ -14,7 +14,7 @@ is_koyeb = os.environ.get("KOYEB") is not None
 db_config = {
     "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
     "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
-    "password": os.environ.get("DB_PASSWORD", "your-password") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
+    "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
 }
 
@@ -30,9 +30,23 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eo
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
 mail = Mail(app)
 
-@app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html')
+
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+
 
 @app.route('/needblood', methods=['GET', 'POST'])
 def need_blood():
