@@ -142,5 +142,5 @@ def logout():
 if __name__ == "__main__":
     # Make sure to run with the correct port for Koyeb environment
     port = int(os.environ.get("PORT", 5000))  # Get PORT from environment or default to 8000
-    app.run(host="0.0.0.0", port=port, debug=True)  # Enable debug for easier troubleshooting during development
+    app.run(host="0.0.0.0", port=port, debug=False)  # Enable debug for easier troubleshooting during development
 
