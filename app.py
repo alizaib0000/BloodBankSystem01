@@ -117,7 +117,6 @@ def dashboard():
     if 'user_id' in session:
         username = session.get('username')  # Fetch the username from the session
         return render_template('dashboard.html', username=username)
-        else:
         return redirect(url_for('login'))  # Redirect to login page if not logged in
     # Flask-Mail configuration (only needed once in your app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
