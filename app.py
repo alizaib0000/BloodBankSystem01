@@ -1,5 +1,4 @@
 from flask import Flask, request, redirect, render_template, session, url_for, flash, jsonify
-import mysql.connector
 import pymysql
 from flask_mail import Message, Mail
 import os
@@ -75,7 +74,7 @@ def need_blood():
 
             flash('Your blood request has been successfully submitted!', 'success')
             return redirect('/needblood')
-        except mysql.connector.Error as e:
+        except pymysql.MySQLError as e:
             flash(f'Error inserting data: {e}', 'error')
             return redirect('/needblood')
 
@@ -141,5 +140,7 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
+    # Make sure to run with the correct port for Koyeb environment
     port = int(os.environ.get("PORT", 8000))  # Get PORT from environment or default to 8000
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)  # Enable debug for easier troubleshooting during development
+
