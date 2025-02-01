@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, render_template, session, url_for, f
 import mysql.connector
 import pymysql
 from flask_mail import Message,Mail
+import os  # Add this at the top
+
 # Flask App Initialization
 app = Flask(__name__)
 @app.route('/index')
