@@ -5,7 +5,7 @@ import os
 
 # Flask App Initialization
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
 
 # Detect environment (Local or Koyeb)
 is_koyeb = os.environ.get("KOYEB") is not None
@@ -26,7 +26,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'bloodbanksystem018@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eomo')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-email-password')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
 mail = Mail(app)
 
