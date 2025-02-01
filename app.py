@@ -1,52 +1,38 @@
 from flask import Flask, request, redirect, render_template, session, url_for, flash
 import pymysql
-from flask_mail import Message, Mail
+from flask_mail import Mail, Message
 import os
 
 # Flask App Initialization
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "your-secret-key")
 
-# Environment Variables for Koyeb
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "your-secret-key")  # You can set this in Koyeb
+# Detect environment (Local or Koyeb)
+is_koyeb = os.environ.get("KOYEB") is not None
 
-# MySQL Database Connection using environment variables
-db = pymysql.connect(
-    host=os.environ.get("DB_HOST", "localhost"),  # Database host
-    user=os.environ.get("DB_USER", "root"),  # MySQL username
-    password=os.environ.get("DB_PASSWORD", "your-password"),  # MySQL password
-    database=os.environ.get("DB_NAME", "blood_bank_system")  # Database name
-)
-cursor = db.cursor()
+# Database Configuration (Switch between Local and Koyeb)
+db_config = {
+    "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
+    "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
+    "password": os.environ.get("DB_PASSWORD", "your-password") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
+    "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
+}
 
-# Flask-Mail configuration
+def get_db_connection():
+    return pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+
+# Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your-email@gmail.com')  # Replace with your email
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-app-password')  # Gmail App password
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'your-email@gmail.com')  # Sender email
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your-email@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-app-password')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'your-email@gmail.com')
 mail = Mail(app)
 
-@app.route('/index')
+@app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/features')
-def features():
-    return render_template('features.html')
-
-@app.route('/about')
-def about():
-    cursor.execute("SELECT COUNT(*) FROM donations")
-    total_donations = cursor.fetchone()[0]
-    cursor.execute("SELECT blood_type, COUNT(*) FROM donations GROUP BY blood_type")
-    donation_stats = cursor.fetchall()
-
-    return render_template('about.html', total_donations=total_donations, donation_stats=donation_stats)
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
 
 @app.route('/needblood', methods=['GET', 'POST'])
 def need_blood():
@@ -63,18 +49,20 @@ def need_blood():
             return redirect('/needblood')
 
         try:
+            db = get_db_connection()
+            cursor = db.cursor()
             query = """
             INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
             VALUES (%s, %s, %s, %s, %s, %s)
             """
             cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
             db.commit()
-
             flash('Your blood request has been successfully submitted!', 'success')
-            return redirect('/needblood')
         except pymysql.MySQLError as e:
             flash(f'Error inserting data: {e}', 'error')
-            return redirect('/needblood')
+        finally:
+            cursor.close()
+            db.close()
 
     return render_template('needblood.html')
 
@@ -87,16 +75,19 @@ def register():
         password = request.form['password']
 
         try:
+            db = get_db_connection()
+            cursor = db.cursor()
             query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (name, email, phone, password))
             db.commit()
-
             flash("Registration successful! Please log in.", "success")
-            return redirect(url_for('login'))
         except pymysql.MySQLError as e:
             flash(f"Error registering user: {e}", "error")
-            return redirect('/register')
+        finally:
+            cursor.close()
+            db.close()
 
+        return redirect(url_for('login'))
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -105,15 +96,18 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
+        db = get_db_connection()
+        cursor = db.cursor()
         query = "SELECT id, name, password FROM users WHERE email = %s"
         cursor.execute(query, (email,))
         user = cursor.fetchone()
+        cursor.close()
+        db.close()
 
-        if user and user[2] == password:  # Comparing with plain password
-            session['user_id'] = user[0]
-            session['username'] = user[1]
-
-            flash("Login successfully!")
+        if user and user['password'] == password:
+            session['user_id'] = user['id']
+            session['username'] = user['name']
+            flash("Login successfully!", "success")
             return redirect(url_for('dashboard'))
         else:
             flash("Invalid credentials, please try again.", "error")
@@ -123,10 +117,14 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        username = session.get('username')
-        return render_template('dashboard.html', username=username)
-    else:
-        return redirect(url_for('login'))
+        return render_template('dashboard.html', username=session.get('username'))
+    return redirect(url_for('login'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out successfully.", "success")
+    return redirect(url_for('login'))
 
 @app.after_request
 def add_no_cache_headers(response):
@@ -135,13 +133,6 @@ def add_no_cache_headers(response):
     response.headers["Expires"] = "0"
     return response
 
-@app.route('/logout')
-def logout():
-    session.clear()
-    flash("You have been logged out successfully.", "success")
-    return redirect(url_for('login'))
-
 if __name__ == "__main__":
-    # Make sure to run with the correct port for Koyeb environment
-    port = int(os.environ.get("PORT", 5000))  # Get PORT from environment or default to 5000
-    app.run(host="0.0.0.0", port=port, debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=not is_koyeb)
