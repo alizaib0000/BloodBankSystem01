@@ -10,16 +10,29 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key fo
 # Detect environment (Local or Koyeb)
 is_koyeb = os.environ.get("KOYEB") is not None
 
-# Database Configuration (Switch between Local and Koyeb)
+# Database Configuration (Local or Koyeb)
 db_config = {
-    "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
-    "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
-    "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
+    "host": os.environ.get("KOYEB_DB_HOST") if is_koyeb else os.environ.get("DB_HOST", "localhost"),
+    "user": os.environ.get("KOYEB_DB_USER") if is_koyeb else os.environ.get("DB_USER", "root"),
+    "password": os.environ.get("KOYEB_DB_PASSWORD") if is_koyeb else os.environ.get("DB_PASSWORD", "22852255"),
+    "database": os.environ.get("KOYEB_DB_NAME") if is_koyeb else os.environ.get("DB_NAME", "blood_bank_system"),
+    "port": int(os.environ.get("KOYEB_DB_PORT", 3306))
 }
 
 def get_db_connection():
-    return pymysql.connect(db_config, cursorclass=pymysql.cursors.DictCursor)
+    try:
+        connection = pymysql.connect(
+            host=db_config[""],
+            user=db_config["user"],
+            password=db_config["22852255"],
+            database=db_config["blood_bank_system"],
+            port=db_config["3306"],
+            cursorclass=pymysql.cursors.DictCursor
+        )
+        return connection
+    except pymysql.MySQLError as e:
+        print(f"Database connection error: {e}")
+        return None
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -34,6 +47,7 @@ mail = Mail(app)
 def index():
     return render_template('index.html')
 
+
 @app.route('/features')
 def features():
     return render_template('features.html')
@@ -45,8 +59,7 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
-
+    
 
 @app.route('/needblood', methods=['GET', 'POST'])
 def need_blood():
@@ -62,8 +75,12 @@ def need_blood():
             flash('Please fill in all the required fields.', 'error')
             return redirect('/needblood')
 
+        db = get_db_connection()
+        if db is None:
+            flash('Database connection failed!', 'error')
+            return redirect('/needblood')
+
         try:
-            db = get_db_connection()
             cursor = db.cursor()
             query = """
             INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
@@ -79,66 +96,6 @@ def need_blood():
             db.close()
 
     return render_template('needblood.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
-        password = request.form['password']
-
-        try:
-            db = get_db_connection()
-            cursor = db.cursor()
-            query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
-            cursor.execute(query, (name, email, phone, password))
-            db.commit()
-            flash("Registration successful! Please log in.", "success")
-        except pymysql.MySQLError as e:
-            flash(f"Error registering user: {e}", "error")
-        finally:
-            cursor.close()
-            db.close()
-
-        return redirect(url_for('login'))
-    return render_template('register.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        db = get_db_connection()
-        cursor = db.cursor()
-        query = "SELECT id, name, password FROM users WHERE email = %s"
-        cursor.execute(query, (email,))
-        user = cursor.fetchone()
-        cursor.close()
-        db.close()
-
-        if user and user['password'] == password:
-            session['user_id'] = user['id']
-            session['username'] = user['name']
-            flash("Login successfully!", "success")
-            return redirect(url_for('dashboard'))
-        else:
-            flash("Invalid credentials, please try again.", "error")
-
-    return render_template('login.html')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        return render_template('dashboard.html', username=session.get('username'))
-    return redirect(url_for('login'))
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    flash("You have been logged out successfully.", "success")
-    return redirect(url_for('login'))
 
 @app.after_request
 def add_no_cache_headers(response):
