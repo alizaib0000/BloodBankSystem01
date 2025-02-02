@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, url_for, flash,jsonify
 import mysql.connector
 import pymysql
-from flask_mail import Message,Mail
+from flask_mail import Message, Mail
 
 # Flask App Initialization
 app = Flask(__name__)
@@ -148,18 +148,6 @@ def add_no_cache_headers(response):
     return response
 
 
-# Dashboard Route
-@app.route('/dashboard')
-
-def dashboard():
-    if 'user_id' in session:
-        username = session.get('username')  # Fetch the username from the session
-        return render_template('dashboard.html', username=username)
-        
-    
-    else:
-        return redirect(url_for('login'))  # Redirect to login page if not logged in
-        
     
 
 # Flask-Mail configuration (only needed once in your app)
@@ -177,7 +165,7 @@ def donate_blood():
     if 'user_id' in session:
         # Retrieve form data
         name = request.form['name']
-        email = request.form['email']  # User's email entered in the form
+        email = request.form['email']  # User's email entered in the form then send message automatically!
         phone = request.form['phone']
         gender = request.form['gender']
         age = request.form['age']
@@ -292,7 +280,7 @@ def exchange_blood():
         return redirect(url_for('dashboard'))
         
 
-# Disable caching to prevent back button from showing dashboard after logout
+# Disable caching to prevent back button from showing dashboard after logout and cleared all data after back.
 @app.after_request
 def add_no_cache_headers(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -300,13 +288,19 @@ def add_no_cache_headers(response):
     response.headers["Expires"] = "0"
     return response
 
-# Logout Route
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' in session:
+        return render_template('dashboard.html', username=session.get('username'))
+    return redirect(url_for('login'))
+
 @app.route('/logout')
 def logout():
-    session.clear()  # Clear all session data
+    session.clear()
     flash("You have been logged out successfully.", "success")
-    return redirect(url_for('login'))  # Redirect to login after logout
+    return redirect(url_for('login'))
 
-# debug on host or port 80
+
+# debug on host or port 5000
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port= 5000)
