@@ -19,7 +19,7 @@ db_config = {
 }
 
 def get_db_connection():
-    return pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+    return pymysql.connect(db_config, cursorclass=pymysql.cursors.DictCursor)
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
