@@ -19,7 +19,19 @@ db_config = {
 }
 
 def get_db_connection():
-    return pymysql.connect(db_config, cursorclass=pymysql.cursors.DictCursor)
+    try:
+        connection = pymysql.connect(
+            host=db_config["host"],
+            user=db_config["user"],
+            password=db_config["password"],
+            database=db_config["database"],
+            cursorclass=pymysql.cursors.DictCursor
+        )
+        return connection
+    except pymysql.MySQLError as e:
+        print(f"Error connecting to MySQL: {e}")
+        flash(f"Error connecting to MySQL: {e}", "error")
+        return None
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -46,8 +58,6 @@ def about():
 def contact():
     return render_template('contact.html')
 
-
-
 @app.route('/needblood', methods=['GET', 'POST'])
 def need_blood():
     if request.method == 'POST':
@@ -64,6 +74,8 @@ def need_blood():
 
         try:
             db = get_db_connection()
+            if db is None:
+                return redirect('/needblood')
             cursor = db.cursor()
             query = """
             INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
@@ -73,6 +85,7 @@ def need_blood():
             db.commit()
             flash('Your blood request has been successfully submitted!', 'success')
         except pymysql.MySQLError as e:
+            print(f"Error inserting data: {e}")
             flash(f'Error inserting data: {e}', 'error')
         finally:
             cursor.close()
@@ -90,12 +103,15 @@ def register():
 
         try:
             db = get_db_connection()
+            if db is None:
+                return redirect('/register')
             cursor = db.cursor()
             query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (name, email, phone, password))
             db.commit()
             flash("Registration successful! Please log in.", "success")
         except pymysql.MySQLError as e:
+            print(f"Error registering user: {e}")
             flash(f"Error registering user: {e}", "error")
         finally:
             cursor.close()
@@ -111,6 +127,8 @@ def login():
         password = request.form['password']
 
         db = get_db_connection()
+        if db is None:
+            return redirect('/login')
         cursor = db.cursor()
         query = "SELECT id, name, password FROM users WHERE email = %s"
         cursor.execute(query, (email,))
@@ -149,4 +167,4 @@ def add_no_cache_headers(response):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug= True is_koyeb)
+    app.run(host="0.0.0.0", port=port, debug=True)
