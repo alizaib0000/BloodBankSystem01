@@ -10,6 +10,7 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", 'AVNS_rnXD51eAbOjp0TKcWAq') 
 # Database Configuration (No extra spaces)
 db_config = {
     "host": "mysql-30da7466-alizaibkhanstatus-f728.i.aivencloud.com",
+    "port": 13658,  # Added port to ensure correct connection
     "user": "avnadmin",
     "password": "AVNS_rnXD51eAbOjp0TKcWAq",
     "database": "defaultdb"
@@ -22,7 +23,8 @@ def get_db_connection():
             user=db_config["user"],
             password=db_config["password"],
             database=db_config["database"],
-            cursorclass=pymysql.cursors.DictCursor
+            cursorclass=pymysql.cursors.DictCursor,
+            connect_timeout=30  # Increased timeout duration to 30 seconds
         )
         return connection
     except pymysql.MySQLError as e:
@@ -85,7 +87,8 @@ def need_blood():
         finally:
             if cursor:
                 cursor.close()
-            db.close()
+            if db:
+                db.close()
 
     return render_template('needblood.html')
 
@@ -97,13 +100,10 @@ def register():
         phone = request.form['phone']
         password = request.form['password']
 
-        db = get_db_connection()
-        cursor = None  # Ensure cursor is initialized
-        if db is None:
-            flash("Unable to connect to the database.", "error")
-            return redirect('/register')
-
         try:
+            db = get_db_connection()
+            if db is None:
+                return redirect('/register')
             cursor = db.cursor()
             query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (name, email, phone, password))
@@ -114,10 +114,10 @@ def register():
         finally:
             if cursor:
                 cursor.close()
-            db.close()
+            if db:
+                db.close()
 
         return redirect(url_for('login'))
-
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
