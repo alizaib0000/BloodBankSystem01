@@ -5,28 +5,27 @@ import os
 
 # Flask App Initialization
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", 'AVNS_rnXD51eAbOjp0TKcWAq')  # Secret key for sessions
 
-# Database Configuration (InfinityFree Database Credentials)
+# Database Configuration (No extra spaces)
 db_config = {
-    "host": "sql309.infinityfree.com",  # MySQL Host Name
-    "user": "if0_38239652",            # MySQL User Name
-    "password": "SuveWPpYrLz", # Your vPanel Password (replace this with your actual vPanel password)
-    "database": "if0_38239652_blood_bank_system"  # MySQL Database Name
+    "host": "mysql-30da7466-alizaibkhanstatus-f728.i.aivencloud.com",
+    "user": "avnadmin",
+    "password": "AVNS_rnXD51eAbOjp0TKcWAq",
+    "database": "defaultdb"
 }
 
 def get_db_connection():
     try:
         connection = pymysql.connect(
-            host=db_config["sql309.infinityfree.com"],
-            user=db_config["if0_38239652"],
-            password=db_config["SuveWPpYrLz"],
-            database=db_config["if0_38239652_blood_bank_system"],
+            host=db_config["host"],
+            user=db_config["user"],
+            password=db_config["password"],
+            database=db_config["database"],
             cursorclass=pymysql.cursors.DictCursor
         )
         return connection
     except pymysql.MySQLError as e:
-        print(f"Error connecting to MySQL: {e}")
         flash(f"Error connecting to MySQL: {e}", "error")
         return None
 
@@ -82,7 +81,6 @@ def need_blood():
             db.commit()
             flash('Your blood request has been successfully submitted!', 'success')
         except pymysql.MySQLError as e:
-            print(f"Error inserting data: {e}")
             flash(f'Error inserting data: {e}', 'error')
         finally:
             cursor.close()
@@ -108,7 +106,6 @@ def register():
             db.commit()
             flash("Registration successful! Please log in.", "success")
         except pymysql.MySQLError as e:
-            print(f"Error registering user: {e}")
             flash(f"Error registering user: {e}", "error")
         finally:
             cursor.close()
@@ -145,9 +142,9 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' in session:
-        return render_template('dashboard.html', username=session.get('username'))
-    return redirect(url_for('login'))
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('dashboard.html', username=session.get('username'))
 
 @app.route('/logout')
 def logout():
