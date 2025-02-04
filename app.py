@@ -83,7 +83,8 @@ def need_blood():
         except pymysql.MySQLError as e:
             flash(f'Error inserting data: {e}', 'error')
         finally:
-            cursor.close()
+            if cursor:
+                cursor.close()
             db.close()
 
     return render_template('needblood.html')
@@ -96,10 +97,13 @@ def register():
         phone = request.form['phone']
         password = request.form['password']
 
+        db = get_db_connection()
+        cursor = None  # Ensure cursor is initialized
+        if db is None:
+            flash("Unable to connect to the database.", "error")
+            return redirect('/register')
+
         try:
-            db = get_db_connection()
-            if db is None:
-                return redirect('/register')
             cursor = db.cursor()
             query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (name, email, phone, password))
@@ -108,10 +112,12 @@ def register():
         except pymysql.MySQLError as e:
             flash(f"Error registering user: {e}", "error")
         finally:
-            cursor.close()
+            if cursor:
+                cursor.close()
             db.close()
 
         return redirect(url_for('login'))
+
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
