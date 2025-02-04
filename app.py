@@ -7,24 +7,21 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
 
-# Detect environment (Local or Koyeb)
-is_koyeb = os.environ.get("KOYEB") is not None
-
-# Database Configuration (Switch between Local and Koyeb)
+# Database Configuration (InfinityFree Database Credentials)
 db_config = {
-    "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
-    "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
-    "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
+    "host": "sql309.infinityfree.com",  # MySQL Host Name
+    "user": "if0_38239652",            # MySQL User Name
+    "password": "SuveWPpYrLz", # Your vPanel Password (replace this with your actual vPanel password)
+    "database": "if0_38239652_blood_bank_system"  # MySQL Database Name
 }
 
 def get_db_connection():
     try:
         connection = pymysql.connect(
-            host=db_config["host"],
-            user=db_config["user"],
-            password=db_config["password"],
-            database=db_config["database"],
+            host=db_config["sql309.infinityfree.com"],
+            user=db_config["if0_38239652"],
+            password=db_config["SuveWPpYrLz"],
+            database=db_config["if0_38239652_blood_bank_system"],
             cursorclass=pymysql.cursors.DictCursor
         )
         return connection
