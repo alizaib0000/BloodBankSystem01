@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, url_for, flash
 import pymysql
-from flask_mail import Mail, Message
 import os
 
 # Flask App Initialization
@@ -19,7 +18,6 @@ db_config = {
 # Function to get a database connection
 def get_db_connection():
     try:
-        # Ensure port is correctly converted to integer
         connection = pymysql.connect(
             host=db_config['host'],
             port=db_config['port'],
@@ -32,15 +30,6 @@ def get_db_connection():
     except Exception as e:
         print(f"Error connecting to database: {e}")
         return None
-
-# Flask-Mail Configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'bloodbanksystem018@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eomo')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
-mail = Mail(app)
 
 # Routes (No changes needed here)
 @app.route('/index')
@@ -111,7 +100,7 @@ def register():
 
             cursor = db.cursor()
             query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
-            cursor.execute(query, (name, email, phone, password))
+            cursor.execute(query, (name, email, phone, password))  # Storing plain text password
             db.commit()
             flash("Registration successful! Please log in.", "success")
         except pymysql.MySQLError as e:
@@ -142,10 +131,11 @@ def login():
         cursor.close()
         db.close()
 
-        if user and user['password'] == password:
+        if user and user['password'] == password:  # Compare plain text password
             session['user_id'] = user['id']
             session['username'] = user['name']
-            flash("Login successfully!", "success")
+            session.modified = True  # Ensures session updates
+            flash("Login successful!", "success")
             return redirect(url_for('dashboard'))
         else:
             flash("Invalid credentials, please try again.", "error")
