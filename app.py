@@ -13,19 +13,20 @@ is_koyeb = os.environ.get("KOYEB") is not None
 # Database Configuration (Switch between Local and Koyeb)
 db_config = {
     "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT", "3306"),  # Default to 3306 if not set
+    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT"),
     "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
     "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
 }
 
+# Function to get a database connection
 def get_db_connection():
     try:
         # Ensure port is correctly converted to integer
         port = int(db_config['port'])
         
         # Create the database connection
-        return pymysql.connect(
+        connection = pymysql.connect(
             host=db_config['host'],
             port=port,  # Ensure it's an integer
             user=db_config['user'],
@@ -33,6 +34,7 @@ def get_db_connection():
             database=db_config['database'],
             cursorclass=pymysql.cursors.DictCursor
         )
+        return connection
     except Exception as e:
         print(f"Error connecting to database: {e}")
         return None
@@ -78,28 +80,28 @@ def need_blood():
 
         try:
             db = get_db_connection()
-            if db:
-                cursor = db.cursor()
-                query = """
-                INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                """
-                cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
-                db.commit()
-                flash('Your blood request has been successfully submitted!', 'success')
-            else:
+            if db is None:
                 flash('Could not connect to the database.', 'error')
+                return redirect('/needblood')
+
+            cursor = db.cursor()
+            query = """
+            INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
+            db.commit()
+            flash('Your blood request has been successfully submitted!', 'success')
         except pymysql.MySQLError as e:
             flash(f'Error inserting data: {e}', 'error')
         finally:
-            if db:
-                db.close()
+            cursor.close()
+            db.close()
 
     return render_template('needblood.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    cursor = None  # Initialize cursor outside try block
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -108,21 +110,21 @@ def register():
 
         try:
             db = get_db_connection()
-            if db:
-                cursor = db.cursor()  # Initialize cursor inside try block
-                query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
-                cursor.execute(query, (name, email, phone, password))
-                db.commit()
-                flash("Registration successful! Please log in.", "success")
-            else:
+            if db is None:
                 flash('Could not connect to the database.', 'error')
+                return redirect('/register')
+
+            cursor = db.cursor()
+            query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
+            cursor.execute(query, (name, email, phone, password))
+            db.commit()
+            flash("Registration successful! Please log in.", "success")
         except pymysql.MySQLError as e:
             flash(f"Error registering user: {e}", "error")
         finally:
             if cursor:
                 cursor.close()
-            if db:
-                db.close()
+            db.close()
 
         return redirect(url_for('login'))
     return render_template('register.html')
@@ -134,6 +136,10 @@ def login():
         password = request.form['password']
 
         db = get_db_connection()
+        if db is None:
+            flash('Could not connect to the database.', 'error')
+            return redirect('/login')
+
         cursor = db.cursor()
         query = "SELECT id, name, password FROM users WHERE email = %s"
         cursor.execute(query, (email,))
