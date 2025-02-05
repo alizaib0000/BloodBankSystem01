@@ -7,12 +7,13 @@ import os
 app = Flask(__name__)
 app.secret_key = '22852255'  # Change this for security
 
-# Database Configuration (Use your InfinityFree MySQL details)
+# Database Configuration (Railway MySQL details)
 db_config = {
-    "host": "sql309.infinityfree.com",  # Your MySQL Hostname
-    "user": "if0_38239652",  # Your MySQL Username
-    "password": "SuveWPpYrLz",  # Your MySQL Password
-    "database": "if0_38239652_blood_bank_system"  # Your Database Name
+    "host": "monorail.proxy.rlwy.net",  # Host from Railway dashboard
+    "user": "root",  # Username from Railway dashboard
+    "password": "tbTwChhRtoivTxezCvWMUGVZIMgGoSyM",  # Password from Railway dashboard
+    "database": "railway",  # Default database name on Railway
+    "port": 49092  # Port from Railway dashboard
 }
 
 # Function to connect to MySQL database
@@ -23,6 +24,7 @@ def get_db_connection():
             user=db_config["user"],
             password=db_config["password"],
             database=db_config["database"],
+            port=db_config["port"],
             cursorclass=pymysql.cursors.DictCursor
         )
         return connection
@@ -36,20 +38,13 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'bloodbanksystem018@gmail.com'  # Replace with your email
 app.config['MAIL_PASSWORD'] = 'mthk qeas wvua eomo'  # Use App Password
-app.config['MAIL_DEFAULT_SENDER'] = 'bloodbanksystem@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'bloodbanksystem018@gmail.com'
 mail = Mail(app)
 
 # Home Route
 @app.route('/index')
 def home():
     return render_template('index.html')
-
-
-
-
-
-
-
 
 # Register Route
 @app.route('/register', methods=['GET', 'POST'])
