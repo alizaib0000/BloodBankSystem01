@@ -8,26 +8,33 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
 
 # Detect environment (Local or Koyeb)
-is_koyeb = os.environ.get("KOYEB") is not None
+is_koyeb = os.environ.get("KOYEB") is not None  # Correct condition for checking Koyeb
 
 # Database Configuration (Switch between Local and Koyeb)
 db_config = {
     "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "port": os.environ.get("DB_PORT", "3306") if not is koyeb else os.environ.get("KOYEB_DB_PORT"),
+    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT"),
     "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
     "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
 }
 
 def get_db_connection():
-    return pymysql.connect(db_config, cursorclass=pymysql.cursors.DictCursor)
+    return pymysql.connect(
+        host=db_config['host'],
+        port=int(db_config['port']),
+        user=db_config['user'],
+        password=db_config['password'],
+        database=db_config['database'],
+        cursorclass=pymysql.cursors.DictCursor
+    )
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'bloodbanksystem018@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eomo')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-email-password')  # Use real password here
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
 mail = Mail(app)
 
@@ -46,8 +53,6 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
-
 
 @app.route('/needblood', methods=['GET', 'POST'])
 def need_blood():
@@ -150,4 +155,4 @@ def add_no_cache_headers(response):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug= True is_koyeb)
+    app.run(host="0.0.0.0", port=port, debug=True)  # Fix debug mode
