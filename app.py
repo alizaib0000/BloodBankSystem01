@@ -7,13 +7,13 @@ import os
 app = Flask(__name__)
 app.secret_key = '22852255'  # Change this for security
 
-# Database Configuration (Railway MySQL details)
+# Koyeb MySQL Configuration
 db_config = {
-    "host": "monorail.proxy.rlwy.net",  # Host from Railway dashboard
-    "user": "root",  # Username from Railway dashboard
-    "password": "tbTwChhRtoivTxezCvWMUGVZIMgGoSyM",  # Password from Railway dashboard
-    "database": "railway",  # Default database name on Railway
-    "port": 49092  # Port from Railway dashboard
+    "host": "ep-bitter-meadow-a28wptyo.eu-central-1.pg.koyeb.app",  # Koyeb MySQL Host
+    "user": "koyeb-adm",  # Koyeb MySQL Username
+    "password": "npg_xKniF8EDCt2A",  # Koyeb MySQL Password
+    "database": "blood_bank_system",  # Your MySQL Database Name
+    "port": 3306  # Default MySQL Port
 }
 
 # Function to connect to MySQL database
