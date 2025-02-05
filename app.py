@@ -7,28 +7,22 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
 
-# Detect environment (Local or Koyeb)
-is_koyeb = os.environ.get("KOYEB") is not None
-
-# Database Configuration (Switch between Local and Koyeb)
+# Database Configuration for FreeSQLDatabase
 db_config = {
-    "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT"),
-    "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
-    "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
-    "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
+    "host": "sql7.freesqldatabase.com",
+    "port": 3306,
+    "user": "sql7761392",  # Replace with your username
+    "password": "uCMiaNNZfW",  # Replace with your actual password
+    "database": "sql7761392"  # Replace with your database name
 }
 
 # Function to get a database connection
 def get_db_connection():
     try:
         # Ensure port is correctly converted to integer
-        port = int(db_config['port'])
-        
-        # Create the database connection
         connection = pymysql.connect(
             host=db_config['host'],
-            port=port,  # Ensure it's an integer
+            port=db_config['port'],
             user=db_config['user'],
             password=db_config['password'],
             database=db_config['database'],
@@ -48,6 +42,7 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eo
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
 mail = Mail(app)
 
+# Routes (No changes needed here)
 @app.route('/index')
 def index():
     return render_template('index.html')
