@@ -8,33 +8,41 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "22852255")  # Secret key for sessions
 
 # Detect environment (Local or Koyeb)
-is_koyeb = os.environ.get("KOYEB") is not None  # Correct condition for checking Koyeb
+is_koyeb = os.environ.get("KOYEB") is not None
 
 # Database Configuration (Switch between Local and Koyeb)
 db_config = {
     "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
-    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT"),
+    "port": os.environ.get("DB_PORT", "3306") if not is_koyeb else os.environ.get("KOYEB_DB_PORT", "3306"),  # Default to 3306 if not set
     "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
     "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
 }
 
 def get_db_connection():
-    return pymysql.connect(
-        host=db_config['host'],
-        port=int(db_config['port']),
-        user=db_config['user'],
-        password=db_config['password'],
-        database=db_config['database'],
-        cursorclass=pymysql.cursors.DictCursor
-    )
+    try:
+        # Ensure port is correctly converted to integer
+        port = int(db_config['port'])
+        
+        # Create the database connection
+        return pymysql.connect(
+            host=db_config['host'],
+            port=port,  # Ensure it's an integer
+            user=db_config['user'],
+            password=db_config['password'],
+            database=db_config['database'],
+            cursorclass=pymysql.cursors.DictCursor
+        )
+    except Exception as e:
+        print(f"Error connecting to database: {e}")
+        return None
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'bloodbanksystem018@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-email-password')  # Use real password here
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'mthk qeas wvua eomo')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'bloodbanksystem018@gmail.com')
 mail = Mail(app)
 
@@ -70,24 +78,28 @@ def need_blood():
 
         try:
             db = get_db_connection()
-            cursor = db.cursor()
-            query = """
-            INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
-            db.commit()
-            flash('Your blood request has been successfully submitted!', 'success')
+            if db:
+                cursor = db.cursor()
+                query = """
+                INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
+                db.commit()
+                flash('Your blood request has been successfully submitted!', 'success')
+            else:
+                flash('Could not connect to the database.', 'error')
         except pymysql.MySQLError as e:
             flash(f'Error inserting data: {e}', 'error')
         finally:
-            cursor.close()
-            db.close()
+            if db:
+                db.close()
 
     return render_template('needblood.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    cursor = None  # Initialize cursor outside try block
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -96,16 +108,21 @@ def register():
 
         try:
             db = get_db_connection()
-            cursor = db.cursor()
-            query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
-            cursor.execute(query, (name, email, phone, password))
-            db.commit()
-            flash("Registration successful! Please log in.", "success")
+            if db:
+                cursor = db.cursor()  # Initialize cursor inside try block
+                query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
+                cursor.execute(query, (name, email, phone, password))
+                db.commit()
+                flash("Registration successful! Please log in.", "success")
+            else:
+                flash('Could not connect to the database.', 'error')
         except pymysql.MySQLError as e:
             flash(f"Error registering user: {e}", "error")
         finally:
-            cursor.close()
-            db.close()
+            if cursor:
+                cursor.close()
+            if db:
+                db.close()
 
         return redirect(url_for('login'))
     return render_template('register.html')
@@ -155,4 +172,4 @@ def add_no_cache_headers(response):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)  # Fix debug mode
+    app.run(host="0.0.0.0", port=port, debug=True)
