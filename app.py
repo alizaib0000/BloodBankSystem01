@@ -13,6 +13,7 @@ is_koyeb = os.environ.get("KOYEB") is not None
 # Database Configuration (Switch between Local and Koyeb)
 db_config = {
     "host": os.environ.get("DB_HOST", "localhost") if not is_koyeb else os.environ.get("KOYEB_DB_HOST"),
+    "port": os.environ.get("DB_PORT", "3306") if not is koyeb else os.environ.get("KOYEB_DB_PORT"),
     "user": os.environ.get("DB_USER", "root") if not is_koyeb else os.environ.get("KOYEB_DB_USER"),
     "password": os.environ.get("DB_PASSWORD", "22852255") if not is_koyeb else os.environ.get("KOYEB_DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "blood_bank_system") if not is_koyeb else os.environ.get("KOYEB_DB_NAME")
