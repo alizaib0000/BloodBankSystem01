@@ -16,9 +16,9 @@ app.secret_key = "22852255"  # Required for session management
 # MySQL Database Connection (Updated to use your remote database)
 db = pymysql.connect(
     host='sql7.freesqldatabase.com',
-    user='sql7761392',
+    user='sql7761432',
     password='uCMiaNNZfW',
-    database='sql7761392',
+    database='9aAWWl2XF4',
     port=3306
 )
 
