@@ -178,6 +178,16 @@ def search_donors():
 
     return render_template('search_donors.html')
 
+# New route for requesting blood
+@app.route('/request_blood', methods=['GET', 'POST'])
+def request_blood():
+    if request.method == 'POST':
+        # Handle logic for requesting blood
+        # You can add your form processing code here
+        flash('Blood request submitted successfully!', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('request_blood.html')  # Render the page to request blood
+
 # Main block to run the Flask app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
