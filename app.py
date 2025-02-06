@@ -250,8 +250,7 @@ def search_donors():
         # Redirect to login if user is not authenticated
         return redirect(url_for('login'))
 
-
-# Request Blood Route
+#added code of email alert after user fill the request blood form
 @app.route('/request_blood', methods=['POST'])
 def request_blood():
     if 'user_id' in session:
@@ -259,13 +258,32 @@ def request_blood():
         blood_type = request.form['blood-type']
         hospital = request.form['hospital']
         urgency = request.form['urgency']
-
+        email = request.form['email']
         query = "INSERT INTO blood_requests (name, blood_type, hospital, urgency, user_id) VALUES (%s, %s, %s, %s, %s)"
         cursor.execute(query, (name, blood_type, hospital, urgency, session['user_id']))
         db.commit()
-        flash("Blood request submitted successfully!", "success")
+        try:
+            msg = Message(
+                subject="Blood Request Confirmation",
+                recipients=[email]
+            )
+            msg.body = f"""
+            Dear {name},
+            Your blood request has been successfully submitted.
+            Request Details:
+            - Name: {name}
+            - Blood Type: {blood_type}
+            - Hospital: {hospital}
+            - Urgency: {urgency}
+            We will notify donors in your area and update you soon.
+            Best regards,
+            Blood Bank Team
+            """
+            mail.send(msg)
+            flash("Blood request submitted successfully! An email confirmation has been sent.", "success")
+        except Exception as e:
+            flash(f"Blood request submitted, but email notification failed: {str(e)}", "warning")
         return redirect(url_for('dashboard'))
-
 # Blood Exchange Route
 @app.route('/exchange_blood', methods=['POST'])
 def exchange_blood():
