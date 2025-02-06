@@ -453,18 +453,18 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 15px;
   }
   
   .dashboard {
-    padding: 50px;
-    display: center;
+    padding: 100px;
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
   
   .dashboard-actions {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
   
   .dashboard-actions button {
