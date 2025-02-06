@@ -67,8 +67,7 @@ def donate_blood():
         except Exception as e:
             flash(f'Error: {e}', 'error')
         finally:
-            if db:
-                db.close()
+            db.close()
 
     return render_template('donateblood.html')
 
@@ -77,7 +76,7 @@ def send_donation_email(donor_name, blood_group, contact_number, location):
     try:
         subject = "Blood Donation Registered"
         body = f"Dear {donor_name},\nThank you for registering. Your details:\nBlood Group: {blood_group}\nContact: {contact_number}\nLocation: {location}\n"
-        msg = Message(subject, recipients=["recipient@example.com"])  # Change the recipient email
+        msg = Message(subject, recipients=["recipient@example.com"])
         msg.body = body
         mail.send(msg)
         print("Email Sent Successfully")
@@ -107,8 +106,7 @@ def register():
         except Exception as e:
             flash(f"Error: {e}", "error")
         finally:
-            if db:
-                db.close()
+            db.close()
 
     return render_template('register.html')
 
@@ -138,8 +136,7 @@ def login():
         except Exception as e:
             flash(f"Error: {e}", "error")
         finally:
-            if db:
-                db.close()
+            db.close()
     
     return render_template('login.html')
 
@@ -155,5 +152,32 @@ def logout():
     flash("Logged out successfully.", "success")
     return redirect(url_for('login'))
 
+@app.route('/search_donors', methods=['GET', 'POST'])
+def search_donors():
+    if request.method == 'POST':
+        # Extract search parameters from the form
+        blood_group = request.form.get('blood_group')
+        location = request.form.get('location')
+
+        try:
+            db = get_db_connection()
+            if not db:
+                raise Exception("Database Connection Failed")
+            
+            with db.cursor() as cursor:
+                query = "SELECT * FROM donate_blood WHERE blood_group = %s AND location = %s"
+                cursor.execute(query, (blood_group, location))
+                donors = cursor.fetchall()
+            
+            return render_template('donors_list.html', donors=donors)
+        except Exception as e:
+            flash(f"Error: {e}", "error")
+        finally:
+            if db:
+                db.close()
+
+    return render_template('search_donors.html')
+
+# Main block to run the Flask app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
