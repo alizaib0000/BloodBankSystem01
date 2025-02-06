@@ -316,4 +316,4 @@ def logout():
 
 # debug on host or port 80
 if __name__ == "__main__":
-    app.run(port=80)
+    app.run(port=5000)
