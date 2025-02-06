@@ -67,7 +67,8 @@ def donate_blood():
         except Exception as e:
             flash(f'Error: {e}', 'error')
         finally:
-            db.close()
+            if db:
+                db.close()
 
     return render_template('donateblood.html')
 
@@ -76,7 +77,7 @@ def send_donation_email(donor_name, blood_group, contact_number, location):
     try:
         subject = "Blood Donation Registered"
         body = f"Dear {donor_name},\nThank you for registering. Your details:\nBlood Group: {blood_group}\nContact: {contact_number}\nLocation: {location}\n"
-        msg = Message(subject, recipients=["recipient@example.com"])
+        msg = Message(subject, recipients=["recipient@example.com"])  # Change the recipient email
         msg.body = body
         mail.send(msg)
         print("Email Sent Successfully")
@@ -106,7 +107,8 @@ def register():
         except Exception as e:
             flash(f"Error: {e}", "error")
         finally:
-            db.close()
+            if db:
+                db.close()
 
     return render_template('register.html')
 
@@ -136,7 +138,8 @@ def login():
         except Exception as e:
             flash(f"Error: {e}", "error")
         finally:
-            db.close()
+            if db:
+                db.close()
     
     return render_template('login.html')
 
