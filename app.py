@@ -2,7 +2,6 @@ from flask import Flask, request, redirect, render_template, session, url_for, f
 import pymysql
 import os
 from flask_mail import Mail, Message
-from werkzeug.security import generate_password_hash, check_password_hash
 
 # Flask App Initialization
 app = Flask(__name__)
@@ -90,7 +89,7 @@ def register():
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
-        password = generate_password_hash(request.form['password'])
+        password = request.form['password']  # Store password as plain text
 
         try:
             db = get_db_connection()
@@ -127,7 +126,7 @@ def login():
                 cursor.execute(query, (email,))
                 user = cursor.fetchone()
             
-            if user and check_password_hash(user['password'], password):
+            if user and user['password'] == password:  # Plain text password check
                 session['user_id'] = user['id']
                 session['username'] = user['name']
                 flash("Login successful!", "success")
