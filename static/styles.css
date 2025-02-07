@@ -460,7 +460,6 @@ header .logo {
 /* Dashboard Actions */
 .dashboard-actions {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
   margin: 50px;
@@ -482,15 +481,12 @@ button:hover {
 @media screen and (max-width: 768px) {
   .dashboard-actions {
     flex-direction: column;
-    align-items: center;
     gap: 10px;
   }
 
   button {
-    width: 90%;
-    max-width: 300px;
+    width: 100%;
     text-align: center;
-    display: block;
   }
 }
 
@@ -503,7 +499,6 @@ button:hover {
 
 table {
   width: 100%;
-  min-width: 600px;
   border-collapse: collapse;
   text-align: left;
 }
@@ -518,6 +513,7 @@ th, td {
   table {
     font-size: 14px;
   }
+
   th, td {
     padding: 5px;
   }
@@ -585,14 +581,22 @@ textarea {
   background-color: #4cae4c;
 }
 
+/* Close Form Button - Centered */
+.close-form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
 .close-form {
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
-  margin-top: 10px;
   cursor: pointer;
-  width: 100%;
+  width: 150px; /* Fixed width for consistency */
+  text-align: center;
 }
 
 .close-form:hover {
@@ -611,13 +615,6 @@ footer {
   .form {
     max-width: 95%;
     max-height: 400px;
-  }
-}
-
-@media (max-width: 480px) {
-  .form {
-    max-height: 350px;
-    overflow-y: auto;
   }
 }
 
