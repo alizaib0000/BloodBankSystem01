@@ -582,7 +582,7 @@ textarea {
 }
 
 
-/* Wrap Close Form Button in a container */
+/* Wrap Close Form Button for dashboard in a container  */
 .close-form-container {
   display: flex; /* Flexbox for centering */
   justify-content: center; /* Horizontally center */
@@ -603,6 +603,17 @@ textarea {
 .close-form:hover {
   background-color: #c0392b;
 }
+
+.center-text {
+  display: flex; /* Enables Flexbox */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  height: 100%; /* Ensure it takes full height of the parent container */
+  text-align: center; /* Ensures text alignment */
+  font-size: 18px; /* Adjust the font size as needed */
+  color: #333; /* Optional: Change text color */
+}
+
 
 
 
