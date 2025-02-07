@@ -582,12 +582,13 @@ textarea {
 }
 
 
-/* Wrap Close Form Button for dashboard in a container  */
+/* Wrap Close Form Button for dashboard in a container */
 .close-form-container {
   display: flex; /* Flexbox for centering */
   justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center (if needed) */
-  margin-top: 0px; /* Add some spacing from above content */
+  align-items: center; /* Vertically center */
+  margin: 0; /* Remove any extra margin from the container */
+  padding: 0; /* Remove any extra padding from the container */
 }
 
 .close-form {
@@ -598,20 +599,35 @@ textarea {
   cursor: pointer;
   width: fit-content; /* Button takes only necessary width */
   text-align: center;
+  margin: 0; /* Remove extra margin from the button */
 }
 
 .close-form:hover {
   background-color: #c0392b;
 }
 
+/* Center the text container */
 .center-text-container {
   display: flex; /* Enables Flexbox */
+  flex-direction: column; /* Stack elements vertically */
   justify-content: center; /* Horizontally center */
   align-items: center; /* Vertically center */
   height: 100vh; /* Full viewport height */
   text-align: center; /* Ensures text alignment */
   font-size: 18px; /* Adjust font size as needed */
   color: #333; /* Optional: Change text color */
+  margin: 0; /* Remove extra margin */
+  padding: 0; /* Remove extra padding */
+}
+
+/* Remove extra space between text and button */
+.center-text-container > p {
+  margin: 0; /* No margin for the paragraph */
+  padding: 0; /* No padding for the paragraph */
+}
+
+.close-form-container {
+  margin-top: 10px; /* Minimal spacing between text and button */
 }
 
 
