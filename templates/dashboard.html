@@ -143,7 +143,14 @@
       </table>
     </div>
   {% elif blood_type %}
-    <p>No donors found for Blood Type: {{ blood_type }}{% if location %} in {{ location }}{% endif %}.</p>
+   <div class="center-text-container">
+  <p>
+    No donors found for Blood Type: {{ blood_type }}
+    {% if location %}
+      in {{ location }}
+    {% endif %}.
+  </p>
+</div>
   {% endif %}
 </div>
 
