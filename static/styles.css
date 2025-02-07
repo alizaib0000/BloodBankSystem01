@@ -612,7 +612,7 @@ textarea {
   flex-direction: column; /* Stack elements vertically */
   justify-content: center; /* Horizontally center */
   align-items: center; /* Vertically center */
-  height: 100vh; /* Full viewport height */
+  height: 10vh; /* Full viewport height */
   text-align: center; /* Ensures text alignment */
   font-size: 18px; /* Adjust font size as needed */
   color: #333; /* Optional: Change text color */
