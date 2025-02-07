@@ -581,23 +581,14 @@ textarea {
   background-color: #4cae4c;
 }
 
-/* Close Form Button - Centered */
-.close-form-container {
-  display: flex;
-  justify-content: flex; /* Horizontally center */
-  align-items: flex; /* Vertically center (if needed) */
-  width: 100%;
-  margin-top: 20px; /* Adjust spacing as needed */
-}
-
 .close-form {
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
+  margin-top: 10px;
   cursor: pointer;
-  width: 150px; /* Fixed width for consistency */
-  text-align: center;
+  width: 100%;
 }
 
 .close-form:hover {
@@ -618,7 +609,6 @@ footer {
     max-height: 400px;
   }
 }
-
 
 
 
