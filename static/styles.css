@@ -582,17 +582,22 @@ textarea {
 }
 
 
+/* Wrap Close Form Button in a container */
 .close-form-container {
-  text-align: center; /* Centers the button inside this div */
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center (if needed) */
+  margin-top: 20px; /* Add some spacing from above content */
 }
 
 .close-form {
-  display: inline-block;
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
+  width: fit-content; /* Button takes only necessary width */
+  text-align: center;
 }
 
 .close-form:hover {
