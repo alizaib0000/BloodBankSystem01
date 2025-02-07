@@ -116,30 +116,32 @@
 </div>
 
 <!-- Display Search Results -->
+<!-- Display Search Results -->
 <div id="results-container">
   {% if donors %}
     <h3>Search Results</h3>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-        
-          <th>Blood Type</th>
-          <th>Address</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for donor in donors %}
+    <div class="table-container">
+      <table border="1">
+        <thead>
           <tr>
-            <td>{{ donor[0] }}</td>
-            <td>{{ donor[1] }}</td>
-            <td>{{ donor[3] }}</td>
-            <td>{{ donor[4] }}</td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Blood Type</th>
+            <th>Address</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for donor in donors %}
+            <tr>
+              <td>{{ donor[0] }}</td>
+              <td>{{ donor[1] }}</td>
+              <td>{{ donor[3] }}</td>
+              <td>{{ donor[4] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   {% elif blood_type %}
     <p>No donors found for Blood Type: {{ blood_type }}{% if location %} in {{ location }}{% endif %}.</p>
   {% endif %}
