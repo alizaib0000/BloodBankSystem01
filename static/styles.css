@@ -460,6 +460,7 @@ header .logo {
 /* Dashboard Actions */
 .dashboard-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
   margin: 50px;
@@ -481,12 +482,15 @@ button:hover {
 @media screen and (max-width: 768px) {
   .dashboard-actions {
     flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 
   button {
-    width: 100%;
+    width: 90%;
+    max-width: 300px;
     text-align: center;
+    display: block;
   }
 }
 
@@ -499,6 +503,7 @@ button:hover {
 
 table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   text-align: left;
 }
@@ -513,7 +518,6 @@ th, td {
   table {
     font-size: 14px;
   }
-
   th, td {
     padding: 5px;
   }
@@ -607,6 +611,13 @@ footer {
   .form {
     max-width: 95%;
     max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    max-height: 350px;
+    overflow-y: auto;
   }
 }
 
