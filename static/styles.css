@@ -416,7 +416,7 @@ body {
 
 
 
-/* General Reset */
+/* General Reset Dashboard section code start*/
 * {
   margin: 0;
   padding: 0;
@@ -581,12 +581,6 @@ textarea {
   background-color: #4cae4c;
 }
 
-.parent-div {
-  display: flex;
-  justify-content: center; /* Horizontal center */
-  align-items: center; /* Vertical center (only if needed) */
-  height: 100vh; /* Full height for proper centering */
-}
 
 .close-form {
   background-color: #e74c3c;
@@ -594,13 +588,17 @@ textarea {
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
-  width: fit-content;
+  width: fit-content; /* Button will take only necessary width */
+  display: block; /* Ensures it behaves like a block */
+  margin: 20px auto; /* Auto centers horizontally */
+  text-align: center; /* Text alignment */
 }
-
 
 .close-form:hover {
   background-color: #c0392b;
 }
+
+
 
 footer {
   text-align: center;
