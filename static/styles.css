@@ -581,17 +581,22 @@ textarea {
   background-color: #4cae4c;
 }
 
+.parent-div {
+  display: flex;
+  justify-content: center; /* Horizontal center */
+  align-items: center; /* Vertical center (only if needed) */
+  height: 100vh; /* Full height for proper centering */
+}
+
 .close-form {
-  display: block;
-  margin: 10px auto; /* Auto margin left & right */
-  text-align: center;
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
-  width: fit-content; /* Only takes as much space as needed */
+  width: fit-content;
 }
+
 
 .close-form:hover {
   background-color: #c0392b;
