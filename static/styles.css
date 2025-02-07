@@ -582,13 +582,15 @@ textarea {
 }
 
 .close-form {
+  display: block;
+  margin: 10px auto; /* Auto margin left & right */
+  text-align: center;
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
-  margin-top: 10px;
   cursor: pointer;
-  width: 100%;
+  width: fit-content; /* Only takes as much space as needed */
 }
 
 .close-form:hover {
