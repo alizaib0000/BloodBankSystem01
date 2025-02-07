@@ -584,8 +584,8 @@ textarea {
 /* Close Form Button - Centered */
 .close-form-container {
   display: flex;
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center (if needed) */
+  justify-content: flex; /* Horizontally center */
+  align-items: flex; /* Vertically center (if needed) */
   width: 100%;
   margin-top: 20px; /* Adjust spacing as needed */
 }
