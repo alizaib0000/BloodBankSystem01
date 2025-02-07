@@ -587,7 +587,7 @@ textarea {
   display: flex; /* Flexbox for centering */
   justify-content: center; /* Horizontally center */
   align-items: center; /* Vertically center (if needed) */
-  margin-top: 20px; /* Add some spacing from above content */
+  margin-top: 0px; /* Add some spacing from above content */
 }
 
 .close-form {
