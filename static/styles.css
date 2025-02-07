@@ -582,16 +582,17 @@ textarea {
 }
 
 
+.close-form-container {
+  text-align: center; /* Centers the button inside this div */
+}
+
 .close-form {
+  display: inline-block;
   background-color: #e74c3c;
   color: white;
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
-  width: fit-content; /* Button will take only necessary width */
-  display: block; /* Ensures it behaves like a block */
-  margin: 20px auto; /* Auto centers horizontally */
-  text-align: center; /* Text alignment */
 }
 
 .close-form:hover {
