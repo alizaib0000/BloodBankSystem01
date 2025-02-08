@@ -165,44 +165,34 @@ mail = Mail(app)
 
 
 
+# Blood donation route
 @app.route('/donate_blood', methods=['POST'])
 def donate_blood():
-    if 'user_id' not in session:
-        flash("Please log in to access this feature.", "danger")
-        return redirect(url_for('login'))
+    if 'user_id' in session:
+        # Retrieve form data
+        name = request.form['name']
+        email = request.form['email']  # User's email entered in the form
+        phone = request.form['phone']
+        gender = request.form['gender']
+        age = request.form['age']
+        blood_type = request.form['blood-type']
+        address = request.form['address']
+        last_donation = request.form['last-donation']
 
-    db = None  # Ensure db is initialized
-    try:
-        # ✅ Ensure Database Connection
-        db = pymysql.connect(host="your_host", user="your_user", password="your_password", database="your_db")
-        cursor = db.cursor()
-
-        # ✅ Retrieve form data safely
-        name = request.form.get('name', '')
-        email = request.form.get('email', '')
-        phone = request.form.get('phone', '')
-        gender = request.form.get('gender', '')
-        age = request.form.get('age', '')
-        blood_type = request.form.get('blood-type', '')
-        address = request.form.get('address', '')
-        last_donation = request.form.get('last-donation', '')
-
-        # ✅ Insert into DB
+        # Insert the data into the database
         query = """
-        INSERT INTO donations (name, email, phone, gender, age, blood_type, address, last_donation, user_id) 
+        INSERT INTO donations 
+        (name, email, phone, gender, age, blood_type, address, last_donation, user_id) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor.execute(query, (name, email, phone, gender, age, blood_type, address, last_donation, session['user_id']))
         db.commit()
 
-        # ✅ Close Cursor
-        cursor.close()
-
-        # ✅ Send email notification
+        # Send email notification
         try:
             msg = Message(
                 subject="Blood Donation Confirmation",
-                recipients=[email]
+                recipients=[email]  # Email entered by the user in the form
             )
             msg.body = f"""
             Dear {name},
@@ -226,18 +216,11 @@ def donate_blood():
         except Exception as e:
             flash(f"Donation successful, but email notification failed: {str(e)}", "warning")
 
+        # Redirect to the dashboard
         return redirect(url_for('dashboard'))
-
-    except Exception as e:
-        if db:
-            db.rollback()  # ✅ Ensure rollback on failure
-        flash(f"An error occurred: {str(e)}", "danger")
-        return redirect(url_for('dashboard'))
-
-    finally:
-        if db:
-            db.close()  # ✅ Ensure connection is closed properly
-
+    else:
+        flash("Please log in to access this feature.", "danger")
+        return redirect(url_for('login'))
 
 
 # Search Donors Route
