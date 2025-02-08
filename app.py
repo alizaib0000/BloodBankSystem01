@@ -161,13 +161,14 @@ app.config['MAIL_PASSWORD'] = 'mthk qeas wvua eomo'  # Replace with your email a
 app.config['MAIL_DEFAULT_SENDER'] = 'bloodbanksystem018@gmail.com'  # Sender email
 mail = Mail(app)
 
-# Blood donation route
 @app.route('/donate_blood', methods=['POST'])
 def donate_blood():
     if 'user_id' not in session:
         flash("Please log in to access this feature.", "danger")
         return redirect(url_for('login'))
     
+    db = None  # Initialize before try block
+
     try:
         # Retrieve form data safely
         name = request.form.get('name', '')
@@ -180,7 +181,13 @@ def donate_blood():
         last_donation = request.form.get('last-donation', '')
 
         # Ensure database connection
-        db = pymysql.connect(host="your_host", user="your_user", password="your_password", database="your_db")
+        db = pymysql.connect(
+            host=os.getenv('DB_HOST'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            database=os.getenv('DB_NAME'),
+            port=int(os.getenv('DB_PORT', 3306))
+        )
         cursor = db.cursor()
 
         # Insert into DB
@@ -224,9 +231,11 @@ def donate_blood():
         return redirect(url_for('dashboard'))
 
     except Exception as e:
-        db.rollback()
+        if db:
+            db.rollback()  # Only call rollback if db is initialized
         flash(f"An error occurred: {str(e)}", "danger")
         return redirect(url_for('dashboard'))
+
 
 
 # Search Donors Route
