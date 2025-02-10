@@ -2,6 +2,9 @@ from flask import Flask, request, redirect, render_template, session, url_for, f
 import pymysql
 from flask_mail import Message, Mail
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+
 # Flask App Initialization
 app = Flask(__name__)
 
@@ -20,6 +23,12 @@ db = pymysql.connect(
     password='AVNS_rnXD51eAbOjp0TKcWAq',
     database='defaultdb',
     port=13658
+
+
+#database reconnection by using connection pooling!
+DATABASE_URL = "mysql+pymysql://avnadmin:AVNS_rnXD51eAbOjp0TKcWAq@public-mysql-30da7466-alizaibkhanstatus-f728.i.aivencloud.com:13658/defaultdb"
+engine = create_engine(DATABASE_URL, pool_size=10, max_overflow=5, pool_recycle=3600)
+db_session = scoped_session(sessionmaker(bind=engine))
 )
 
 cursor = db.cursor()
