@@ -20,9 +20,6 @@ db = pymysql.connect(
     password='AVNS_rnXD51eAbOjp0TKcWAq',
     database='defaultdb',
     port=13658
-
-    DATABASE_URL = "mysql+pymysql://avnadmin:AVNS_rnXD51eAbOjp0TKcWAq@public-mysql-30da7466-alizaibkhanstatus-f728.i.aivencloud.com:13658/defaultdb"
-
 )
 
 cursor = db.cursor()
