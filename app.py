@@ -2,6 +2,19 @@ from flask import Flask, request, redirect, render_template, session, url_for, f
 import pymysql
 from flask_mail import Message, Mail
 
+
+#start connection with mysql reconnection
+from sqlalchemy.exc import OperationalError
+
+def get_db_session():
+    try:
+        return db_session
+    except OperationalError:
+        engine.dispose()  # Purana connection hatao
+        engine = create_engine(DATABASE_URL, pool_size=20, max_overflow=10, pool_recycle=3600)
+        db_session = scoped_session(sessionmaker(bind=engine))
+        return db_session #end mysql database 
+
 # Flask App Initialization
 app = Flask(__name__)
 
