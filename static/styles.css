@@ -792,7 +792,7 @@ footer {
 /* Centered Flash Message */
 .popup {
   position: fixed;
-  top: 50%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #4CAF50; /* Green for success */
@@ -809,4 +809,6 @@ footer {
 /* Error Message Style */
 .popup-error {
   background-color: #f44336; /* Red for error */
+  top: 80%;
+  left: 50%;
 }
