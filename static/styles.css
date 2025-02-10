@@ -457,6 +457,36 @@ header .logo {
   margin-right: 10px;
 }
 
+
+
+
+/*start code here new login 
+/* Centered Flash Message */
+.popup {
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50; /* Green for success */
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;  /* Hidden by default */
+  text-align: left;
+  font-size: 16px;
+}
+
+/* Error Message Style */
+.popup-error {
+  background-color: #f44336; /* Red for error */
+  top: 80%;
+  left: 50%;
+}
+/*end code here new login 
+
+
 /* Dashboard Actions */
 .dashboard-actions {
   display: flex;
@@ -629,6 +659,8 @@ textarea {
 .close-form-container {
   margin-top: 10px; /* Minimal spacing between text and button */
 }
+
+
 
 
 
