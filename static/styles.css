@@ -668,7 +668,7 @@ textarea {
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #d9534f;
+  background-color: #f01b13; /* red background */
   color: #fff;
   margin-top: 40px;
 }
