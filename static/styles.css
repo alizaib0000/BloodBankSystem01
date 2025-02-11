@@ -663,17 +663,13 @@ textarea {
 
 
 
+/* Footer will always stay at the bottom */
 .footer {
     background-color: #2d3436;
     color: #fff;
     text-align: center;
-    padding: 20px; /* Increased padding for better height */
-    margin-top: 50px; /* Increased margin for better spacing */
-    font-size: 0.9rem; /* Slightly increased font size */
-    min-height: 80px; /* Ensures proper height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 20px;
+    font-size: 1rem;
     width: 100%;
 }
 
@@ -686,7 +682,6 @@ textarea {
 .footer a:hover {
     text-decoration: underline;
 }
-
 
 
 
