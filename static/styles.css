@@ -339,10 +339,10 @@ body {
 
 /* Footer Section */
 .footer {
-  background-color: #333;
-  color: white;
-  padding: 40px 20px;
-  text-align: center;
+    background-color: #222;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
 }
 
 .footer .footer-content {
@@ -416,8 +416,137 @@ body {
 
 
 
-/* General Reset start dashboard section */
-/* General Reset Dashboard section code start*/
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  header {
+    background-color: #ee2603;
+    padding: 200px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  header .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .dashboard {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .dashboard-actions {
+    margin-bottom: 40px;
+  }
+  
+  .dashboard-actions button {
+    padding: 10px 10px;
+    margin: 10px;
+    background-color: #ee2603;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dashboard-actions button:hover {
+    background-color: #ee2603;
+  }
+  
+  .donate-form-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .donate-form {
+    background-color: white;
+    padding: 0px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  form label {
+    margin-bottom: 20px;
+    display: fixed;
+  }
+  
+  form input, form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .submit-btn {
+    background-color: #4CAF50;
+    padding: 10px 15px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .close-form {
+    background-color: #d42e12;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+    
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+  }
+
+
+
+
+  
+
+  /* General Reset */
 * {
   margin: 0;
   padding: 0;
@@ -446,6 +575,7 @@ header .logo {
   font-weight: bold;
 }
 
+/* Profile Section */
 .profile {
   display: flex;
   align-items: center;
@@ -458,36 +588,6 @@ header .logo {
   margin-right: 10px;
 }
 
-
-
-
-/*start code here new login 
-/* Centered Flash Message */
-.popup {
-  position: fixed;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #4CAF50; /* Green for success */
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: none;  /* Hidden by default */
-  text-align: left;
-  font-size: 16px;
-}
-
-/* Error Message Style */
-.popup-error {
-  background-color: #f44336; /* Red for error */
-  top: 80%;
-  left: 50%;
-}
-/*end code here new login 
-
-
 /* Dashboard Actions */
 .dashboard-actions {
   display: flex;
@@ -496,6 +596,7 @@ header .logo {
   margin: 50px;
 }
 
+/* Button Styles */
 button {
   background-color: #d9534f;
   color: #fff;
@@ -509,99 +610,63 @@ button:hover {
   background-color: #c9302c;
 }
 
-@media screen and (max-width: 768px) {
-  .dashboard-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  button {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-
-
-
-/* Table Container */
-.table-container {
-  overflow-x: auto;
-  width: 100%;
-  margin-top: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #000;
-  white-space: nowrap;
-}
-
-@media screen and (max-width: 768px) {
-  table {
-    font-size: 14px;
-  }
-
-  th, td {
-    padding: 5px;
-  }
-}
-
-/* Form Container */
+/* Centered and Resized Form Container */
 .form-container {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%; /* Adjusted to 100% height */
+  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
   justify-content: center;
   align-items: center;
 }
 
+/* Form Style */
 .form {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
   width: 100%;
-  max-width: 400px;
-  max-height: 500px;
+  max-width: 400px; /* Adjusted max width to be equal for all forms */
+  height: auto; /* Ensures the form height adjusts based on content */
+  max-height: 500px; /* Fixed max height to prevent it from growing too large */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  overflow: auto;
+  overflow: auto; /* Adds scroll if content exceeds max height */
 }
 
 .form h2 {
   margin-bottom: 20px;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* Title size */
 }
 
 label {
   display: block;
   margin-top: 10px;
+  font-size: 1rem; /* Uniform label size */
 }
 
 input, select, textarea {
-  width: 100%;
+  width: 100%; /* Ensure inputs and selects are 100% width */
   padding: 8px;
   margin-top: 8px;
-  font-size: 1rem;
+  font-size: 1rem; /* Input size */
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 textarea {
-  resize: vertical;
-  height: 80px;
+  resize: vertical; /* Allow vertical resizing only */
+  height: 80px; /* Reduce textarea height */
 }
 
+input[type="date"], input[type="tel"] {
+  width: 100%; /* Ensure input types like date and tel are also full width */
+}
+
+/* Submit Button */
 .submit-btn {
   background-color: #5cb85c;
   margin-top: 20px;
@@ -615,167 +680,72 @@ textarea {
   background-color: #4cae4c;
 }
 
-
-/* Wrap Close Form Button for dashboard in a container */
-.close-form-container {
-  display: flex; /* Flexbox for centering */
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center */
-  margin: 0; /* Remove any extra margin from the container */
-  padding: 0; /* Remove any extra padding from the container */
-}
-
+/* Close Form Button */
 .close-form {
   background-color: #e74c3c;
   color: white;
+  border: none;
   padding: 12px 20px;
   border-radius: 5px;
+  font-size: 1rem;
+  margin-top: 10px;
   cursor: pointer;
-  width: fit-content; /* Button takes only necessary width */
-  text-align: center;
-  margin: 0; /* Remove extra margin from the button */
+  width: 100%;
 }
 
 .close-form:hover {
   background-color: #c0392b;
 }
 
-/* Center the text container */
-.center-text-container {
-  display: flex; /* Enables Flexbox */
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center */
-  height: 10vh; /* Full viewport height */
-  text-align: center; /* Ensures text alignment */
-  font-size: 18px; /* Adjust font size as needed */
-  color: #333; /* Optional: Change text color */
-  margin: 0; /* Remove extra margin */
-  padding: 0; /* Remove extra padding */
-}
-
-/* Remove extra space between text and button */
-.center-text-container > p {
-  margin: 0; /* No margin for the paragraph */
-  padding: 0; /* No padding for the paragraph */
-}
-
-.close-form-container {
-  margin-top: 10px; /* Minimal spacing between text and button */
-}
-
-
-
-
-/* General Reset Dashboard section code start*/
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Header */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ee2603;
-  color: #fff;
-  padding: 10px 20px;
-}
-
-header .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-}
-
-.profile .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-/* Main Content */
-.main-content {
-  flex: 1; /* Ensures content takes available space */
-  padding: 20px;
-}
-
-/* Dashboard Actions */
-.dashboard-actions {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 50px;
-}
-
-button {
-  background-color: #d9534f;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #c9302c;
-}
-
-@media screen and (max-width: 768px) {
-  .dashboard-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  button {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Footer Fixed at Bottom */
-.footer {
-  background-color: #2d3436;
-  color: #fff;
+/* Footer */
+footer {
   text-align: center;
   padding: 20px;
-  font-size: 0.9rem;
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  background-color: #d9534f;
+  color: #fff;
+  margin-top: 40px;
 }
 
-.footer a {
-  color: #ff4757;
-  text-decoration: none;
-  font-weight: bold;
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .form {
+    max-width: 95%; /* Make the form smaller on small screens */
+    max-height: 400px; /* Adjust max height for smaller screens */
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  input, select, textarea {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .submit-btn, .close-form {
+    font-size: 1rem;
+    padding: 10px;
+  }
 }
 
-.footer a:hover {
-  text-decoration: underline;
-}/*end dashboard section*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -865,30 +835,14 @@ body {
   text-decoration: underline;
 }
 
-
-
-.footer {
-    background-color: #2d3436;
-    color: #fff;
-    text-align: center;
-    padding: 20px; /* Increased padding for better height */
-    margin-top: 50px; /* Increased margin for better spacing */
-    font-size: 0.9rem; /* Slightly increased font size */
-    min-height: 80px; /* Ensures proper height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.footer a {
-    color: #ff4757;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.footer a:hover {
-    text-decoration: underline;
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  font-size: 0.9rem;
+  margin-top: auto;
 }
 
 /* Responsive Design */
@@ -919,7 +873,7 @@ body {
 /* Centered Flash Message */
 .popup {
   position: fixed;
-  top: 80%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #4CAF50; /* Green for success */
@@ -936,6 +890,4 @@ body {
 /* Error Message Style */
 .popup-error {
   background-color: #f44336; /* Red for error */
-  top: 80%;
-  left: 50%;
 }
