@@ -663,23 +663,14 @@ textarea {
 
 
 
-/* stat real code
+/* stat real code */
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #f01b13; /* red background 
+  background-color: #f01b13; /* red background */
   color: #fff;
   margin-top: 40px;
 end real code
-
-
-/* start Footer Section */
-.footer {
-    background-color: #f01b13;
-    color: #fff;
-    padding: 40px 20px;
-    text-align: center;
-}
 
 .footer .footer-content {
     display: flex;
@@ -731,6 +722,7 @@ end real code
 .footer .social-links a:hover {
   color: #f01b13;
 }
+
 
 /*end code here */
 
