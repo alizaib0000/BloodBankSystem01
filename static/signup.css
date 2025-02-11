@@ -73,7 +73,7 @@ h2 {
     background-color: #2d3436;
     color: #fff;
     text-align: center;
-    padding: 30px 20px; /* Increased padding for better height */
+    padding: 20px; /* Increased padding for better height */
     margin-top: 50px; /* Increased margin for better spacing */
     font-size: 1rem; /* Slightly increased font size */
     min-height: 80px; /* Ensures proper height */
