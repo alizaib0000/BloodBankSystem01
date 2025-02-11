@@ -152,14 +152,14 @@
     }
   }
 
-/* start Footer Section */
-.footer {
-   /* background-color: #f01b13;*/
-    background-color: #333;
-    color: #fff;
-    padding: 40px 20px;
-    text-align: center;
-}
+/* stat real code */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f01b13; /* red background */
+  color: #fff;
+  margin-top: 40px;
+end real code
 
 .footer .footer-content {
     display: flex;
@@ -211,5 +211,6 @@
 .footer .social-links a:hover {
   color: #f01b13;
 }
+
 
 /*end code here */
