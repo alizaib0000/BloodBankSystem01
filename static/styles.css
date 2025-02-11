@@ -663,15 +663,78 @@ textarea {
 
 
 
-
-
+/* stat real code
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #f01b13; /* red background */
+  background-color: #f01b13; /* red background 
   color: #fff;
   margin-top: 40px;
+end real code
+
+
+/* start Footer Section */
+.footer {
+    background-color: #f01b13;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
 }
+
+.footer .footer-content {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.footer .footer-left,
+.footer .footer-middle,
+.footer .footer-right {
+    flex: 1;
+}
+
+.footer h3,
+.footer h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin: 5px 0;
+}
+
+.footer .social-links {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    margin: 10px auto;
+}
+
+.footer .social-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.footer .footer-bottom {
+    background-color: #111;
+    padding: 10px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.footer .social-links a:hover {
+  color: #f01b13;
+}
+
+/*end code here */
+
+
 
 @media (max-width: 768px) {
   .form {
@@ -786,7 +849,7 @@ body {
   text-decoration: underline;
 }
 
-/* Footer */
+/* Footer 
 footer {
   text-align: center;
   padding: 20px;
@@ -795,6 +858,69 @@ footer {
   font-size: 0.9rem;
   margin-top: auto;
 }
+
+
+
+/* start Footer Section */
+.footer {
+    background-color: #f01b13;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer .footer-content {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.footer .footer-left,
+.footer .footer-middle,
+.footer .footer-right {
+    flex: 1;
+}
+
+.footer h3,
+.footer h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin: 5px 0;
+}
+
+.footer .social-links {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    margin: 10px auto;
+}
+
+.footer .social-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.footer .footer-bottom {
+    background-color: #111;
+    padding: 10px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.footer .social-links a:hover {
+  color: #f01b13;
+}
+
+/*end code here */
 
 /* Responsive Design */
 @media (max-width: 768px) {
