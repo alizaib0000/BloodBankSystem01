@@ -669,13 +669,16 @@ textarea {
     color: #fff;
     text-align: center;
     padding: 20px;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    min-height: 80px; /* Ensures proper height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    position: fixed;
-    bottom: 0;
+    position: fixed; /* Footer ko screen ke bottom pe fix karne ke liye */
+    bottom: 0; /* Neeche chipka dega */
     left: 0;
 }
-
 .footer a {
     color: #ff4757;
     text-decoration: none;
@@ -685,7 +688,6 @@ textarea {
 .footer a:hover {
     text-decoration: underline;
 }
-
 
 
 
