@@ -324,11 +324,11 @@ body {
 }
 
 .emergency-alerts button {
-    padding: 10px 40px;
+    padding: 10px 80px;
     background-color: #f01b13;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
 }
