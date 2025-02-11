@@ -65,26 +65,23 @@ h2 {
     text-decoration: underline;
 }
 
-/* Footer */
-footer {
+/* Footer Styles */
+.footer {
+    background-color: #2d3436;
+    color: #fff;
     text-align: center;
-    padding: 15px;
-    background-color: #333;
-    color: white;
+    padding: 20px;
+    margin-top: 30px;
     font-size: 0.9rem;
-    width: 100%; /* Ensure the footer spans the full width */
-    position: absolute; /* Position at the bottom */
-    bottom: 0;
-    left: 0;
 }
 
-footer a {
-    color: #f1c40f; /* Add some interactivity for links */
+.footer a {
+    color: #ff4757;
     text-decoration: none;
+    font-weight: bold;
 }
 
-footer a:hover {
-    color: #f39c12;
+.footer a:hover {
     text-decoration: underline;
 }
 
