@@ -520,6 +520,9 @@ button:hover {
   }
 }
 
+
+
+
 /* Table Container */
 .table-container {
   overflow-x: auto;
@@ -663,30 +666,114 @@ textarea {
 
 
 
-/* Footer will always stay at the bottom */
-.footer {
-    background-color: #2d3436;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    font-size: 0.9rem;
-    min-height: 80px; /* Ensures proper height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    position: fixed; /* Footer ko screen ke bottom pe fix karne ke liye */
-    bottom: 0; /* Neeche chipka dega */
-    left: 0;
+/* General Reset Dashboard section code start*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ee2603;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1; /* Ensures content takes available space */
+  padding: 20px;
+}
+
+/* Dashboard Actions */
+.dashboard-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 50px;
+}
+
+button {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c9302c;
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Footer Fixed at Bottom */
+.footer {
+  background-color: #2d3436;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 .footer a {
-    color: #ff4757;
-    text-decoration: none;
-    font-weight: bold;
+  color: #ff4757;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 
