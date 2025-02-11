@@ -663,69 +663,25 @@ textarea {
 
 
 
-/* stat real code */
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #f01b13; /* red background */
-  color: #fff;
-  margin-top: 40px;
-end real code
-
-.footer .footer-content {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.footer .footer-left,
-.footer .footer-middle,
-.footer .footer-right {
-    flex: 1;
-}
-
-.footer h3,
-.footer h4 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-}
-
-.footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer ul li {
-    margin: 5px 0;
-}
-
-.footer .social-links {
-    display: flex;
-    justify-content: space-between;
-    width: 200px;
-    margin: 10px auto;
-}
-
-.footer .social-links a {
-    text-decoration: none;
+/* Footer Styles */
+.footer {
+    background-color: #2d3436;
     color: #fff;
-    font-size: 1.2rem;
-}
-
-.footer .footer-bottom {
-    background-color: #111;
-    padding: 10px;
-    color: #aaa;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
     font-size: 0.9rem;
 }
 
-.footer .social-links a:hover {
-  color: #f01b13;
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-
-/*end code here */
-
+.footer a:hover {
+    text-decoration: underline;
+}
 
 
 @media (max-width: 768px) {
@@ -853,67 +809,25 @@ footer {
 
 
 
-/* start Footer Section */
+/* Footer Styles */
 .footer {
-    background-color: #333;
+    background-color: #2d3436;
     color: #fff;
-    padding: 40px 20px;
     text-align: center;
-}
-
-.footer .footer-content {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.footer .footer-left,
-.footer .footer-middle,
-.footer .footer-right {
-    flex: 1;
-}
-
-.footer h3,
-.footer h4 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-}
-
-.footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer ul li {
-    margin: 5px 0;
-}
-
-.footer .social-links {
-    display: flex;
-    justify-content: space-between;
-    width: 200px;
-    margin: 10px auto;
-}
-
-.footer .social-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.2rem;
-}
-
-.footer .footer-bottom {
-    background-color: #111;
-    padding: 10px;
-    color: #aaa;
+    padding: 20px;
+    margin-top: 30px;
     font-size: 0.9rem;
 }
 
-.footer .social-links a:hover {
-  color: #f01b13;
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-/*end code here */
-
+.footer a:hover {
+    text-decoration: underline;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .login-form {
