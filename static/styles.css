@@ -671,6 +671,9 @@ textarea {
     padding: 20px;
     font-size: 1rem;
     width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 .footer a {
