@@ -75,7 +75,7 @@ h2 {
     text-align: center;
     padding: 20px; /* Increased padding for better height */
     margin-top: 50px; /* Increased margin for better spacing */
-    font-size: 1rem; /* Slightly increased font size */
+    font-size: 0.9rem; /* Slightly increased font size */
     min-height: 80px; /* Ensures proper height */
     display: flex;
     align-items: center;
