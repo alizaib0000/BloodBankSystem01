@@ -697,21 +697,6 @@ textarea {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* General Reset */
 * {
   margin: 0;
@@ -795,16 +780,6 @@ body {
 
 .login-form a:hover {
   text-decoration: underline;
-}
-
-/* Footer 
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: white;
-  font-size: 0.9rem;
-  margin-top: auto;
 }
 
 
