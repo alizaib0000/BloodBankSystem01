@@ -708,15 +708,29 @@ body {
   text-decoration: underline;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: white;
-  font-size: 0.9rem;
-  margin-top: auto;
+/* Footer Styles start */
+.footer {
+    background-color: #2d3436;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    font-size: 0.9rem;
 }
+
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+/*end footer section
+
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
