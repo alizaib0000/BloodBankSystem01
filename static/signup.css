@@ -1,11 +1,12 @@
 /* Navbar Styles */
 .navbar {
   display: flex;
-  justify-content: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 5px 30px;
+  padding: 10px 30px;
   background-color: #f01b13; /* red background */
   color: #fff;
+  flex-wrap: wrap;
 }
 
 .navbar .logo {
@@ -24,6 +25,9 @@
 .navbar .nav-links {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar .nav-links li {
@@ -39,142 +43,135 @@
 }
 
 .navbar .nav-links li a:hover {
-  background-color: #f01b13; /* Darker pink on hover */
+  background-color: #d9534f; /* Darker pink on hover */
   border-radius: 20px;
 }
-/* end of navigation bar code */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* General Styles  end signup code here */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-    display: flex;
+/* Mobile View */
+@media screen and (max-width: 768px) {
+  .navbar {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .navbar .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  .navbar .nav-links li {
+    margin: 5px 0;
+  }
+
+  .navbar .nav-links li a {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 h2 {
-    color: #d9534f;
-    text-align: center;
-    margin-bottom: 20px;
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .signup-form {
-    background: #ffffff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
 }
 
 .signup-form input {
-    width: calc(100% - 20px);
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+  width: calc(100% - 20px);
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .signup-form button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
 }
 
 .signup-form button:hover {
-    background-color: #c9302c;
+  background-color: #c9302c;
 }
 
 .signup-form p {
-    font-size: 0.9rem;
-    margin-top: 15px;
+  font-size: 0.9rem;
+  margin-top: 15px;
 }
 
 .signup-form a {
-    color: #d9534f;
-    text-decoration: none;
+  color: #d9534f;
+  text-decoration: none;
 }
 
 .signup-form a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-/*end signup code here */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Footer Styles */
 .footer {
-    background-color: #2d3436;
-    color: #fff;
-    text-align: center;
-    padding: 20px; /* Increased padding for better height */
-    margin-top: 50px; /* Increased margin for better spacing */
-    font-size: 0.9rem; /* Slightly increased font size */
-    min-height: 80px; /* Ensures proper height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  background-color: #2d3436;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+  font-size: 0.9rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .footer a {
-    color: #ff4757;
-    text-decoration: none;
-    font-weight: bold;
+  color: #ff4757;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+
+/* Mobile Footer */
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  .footer a {
+    font-size: 1rem;
+  }
 }
