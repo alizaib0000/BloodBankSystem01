@@ -608,31 +608,15 @@ textarea {
 
 /* General Reset dahboard code end here  */
 /* Footer Styles */
+/* General Reset dahboard code end here  */
 /* Footer Styles */
 .footer {
     background-color: #2d3436;
     color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
+    text-align: center;
+    padding: 20px;
     margin-top: 30px;
     font-size: 0.9rem;
-}
-
-.footer .left {
-    flex: 1;
-    text-align: left;
-}
-
-.footer .center {
-    flex: 1;
-    text-align: center;
-}
-
-.footer .right {
-    flex: 1;
-    text-align: right;
 }
 
 .footer a {
@@ -645,6 +629,7 @@ textarea {
     text-decoration: underline;
 }
 
+/*end footer of dashboard /*
 /*end footer of dashboard /*
 
 
