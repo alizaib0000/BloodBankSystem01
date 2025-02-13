@@ -1,93 +1,4 @@
-/* Navbar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background-color: #f01b13; /* red background */
-  color: #fff;
-  flex-wrap: wrap;
-}
-
-.navbar .logo {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.navbar .logo-image {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.navbar .nav-links {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar .nav-links li {
-  margin-left: 15px;
-}
-
-.navbar .nav-links li a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 1rem;
-  padding: 8px 15px;
-  transition: background-color 0.3s ease;
-}
-
-.navbar .nav-links li a:hover {
-  background-color: #d9534f; /* Darker pink on hover */
-  border-radius: 20px;
-}
-
-/* Mobile View */
-@media screen and (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar .nav-links {
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: 10px;
-  }
-
-  .navbar .nav-links li {
-    margin: 5px 0;
-  }
-
-  .navbar .nav-links li a {
-    font-size: 1.2rem;
-    padding: 10px 15px;
-    width: 100%;
-    text-align: left;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* General Styles  end signup code here */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -153,53 +64,68 @@ h2 {
 .signup-form a:hover {
     text-decoration: underline;
 }
-/*end signup code here */
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* Footer Styles */
-.footer {
-  background-color: #2d3436;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  margin-top: 50px;
-  font-size: 0.9rem;
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.footer a {
-  color: #ff4757;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-/* Mobile Footer */
-@media screen and (max-width: 768px) {
-  .footer {
+/* Footer */
+footer {
+    text-align: center;
     padding: 15px;
-    font-size: 1rem;
-  }
+    background-color: #333;
+    color: white;
+    font-size: 0.9rem;
+    width: 100%; /* Ensure the footer spans the full width */
+    position: absolute; /* Position at the bottom */
+    bottom: 0;
+    left: 0;
+}
 
-  .footer a {
+footer a {
+    color: #f1c40f; /* Add some interactivity for links */
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #f39c12;
+    text-decoration: underline;
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.popup-content button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     font-size: 1rem;
-  }
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #c9302c;
 }
