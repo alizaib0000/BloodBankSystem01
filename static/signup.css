@@ -142,22 +142,23 @@ h2 {
 
 
 
-/* Footer Styles start */
 .footer {
-  background-color: #1e1e1e;
-  color: #fff;
-  text-align: center;
-  padding: 15px;
-  margin-top: 30px;
-  font-size: 1rem;
+    background-color: #2d3436;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
 }
 
 .footer a {
-  color: #ff6b6b;
-  text-decoration: none;
-  font-weight: bold;
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .footer a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
