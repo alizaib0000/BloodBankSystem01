@@ -607,9 +607,27 @@ textarea {
 
 
 /* General Reset dahboard code end here  */
+/* Footer Styles */
+.footer {
+    background-color: #2d3436;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
 
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+    font-weight: bold;
+}
 
+.footer a:hover {
+    text-decoration: underline;
+}
 
+/*end footer of dashboard /*
 
 
 
