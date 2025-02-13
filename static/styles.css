@@ -608,13 +608,31 @@ textarea {
 
 /* General Reset dahboard code end here  */
 /* Footer Styles */
+/* Footer Styles */
 .footer {
     background-color: #2d3436;
     color: #fff;
-    text-align: center;
-    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
     margin-top: 30px;
     font-size: 0.9rem;
+}
+
+.footer .left {
+    flex: 1;
+    text-align: left;
+}
+
+.footer .center {
+    flex: 1;
+    text-align: center;
+}
+
+.footer .right {
+    flex: 1;
+    text-align: right;
 }
 
 .footer a {
