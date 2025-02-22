@@ -462,25 +462,27 @@ header .logo {
 
 
 
+
+
+
 /*logout button added here */
 .logout-btn {
     color: white;
     text-decoration: none;
-    font-weight: bold;
     padding: 0px 10px;
     margin-right : 10px
     background-color: #d9534f; /* Red color */
-    border-radius: 5px;
+    border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     border: none;
-    display: block
 }
 
 .logout-btn:hover {
     background-color: #c9302c; /* Darker red on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    transform: scale(0.9); /* Slight zoom effect */
 }
 /*logout button code added end here */
+
 
 
 
