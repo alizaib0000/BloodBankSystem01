@@ -22,11 +22,26 @@
       <!-- Logout Button -->
       <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
     </div>
+
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
+    
   </header>
+
+
+
   
+  
+
 
   <!-- Main Dashboard Section -->
   <section class="dashboard">
+    <div class="stats">
+      <div class="stat-card">Total Donors: <span id="total-donors">0</span></div>
+      <div class="stat-card">Blood Requests: <span id="blood-requests">0</span></div>
+      <div class="stat-card">Successful Donations: <span id="successful-donations">0</span></div>
+    </div>
+
+    
     <!-- Dashboard Buttons and Forms -->
     <div class="dashboard-actions">
       
