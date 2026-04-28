@@ -1,336 +1,155 @@
-from flask import Flask, request, redirect, render_template, session, url_for, flash, jsonify
+import os
+from flask import Flask, request, redirect, render_template, session, url_for, flash
 import pymysql
 from flask_mail import Message, Mail
 
-
-#start connection with mysql reconnection
-from sqlalchemy.exc import OperationalError
-
-def get_db_session():
-    try:
-        return db_session
-    except OperationalError:
-        engine.dispose()  # Purana connection hatao
-        engine = create_engine(DATABASE_URL, pool_size=20, max_overflow=10, pool_recycle=3600)
-        db_session = scoped_session(sessionmaker(bind=engine))
-        return db_session #end mysql database 
-
-# Flask App Initialization
 app = Flask(__name__)
 
-@app.route('/index')
-def index():
-    return render_template('index.html')  # Your HTML file name
+# =========================
+# 🔐 SECRET KEY
+# =========================
+app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 
+# =========================
+# 📧 MAIL CONFIG
+# =========================
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_USERNAME")
 
-app.secret_key = "22852255"  # Required for session management
+mail = Mail(app)
 
+# =========================
+# 🗄 DATABASE FUNCTION
+# =========================
+def get_db():
+    return pymysql.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
+        port=int(os.getenv("DB_PORT", 3306))
+    )
 
-# MySQL Database Connection (Updated to use your remote database)
-db = pymysql.connect(
-    host='mysql-24e02235-alizaibkhanstatus-f728.j.aivencloud.com',
-    user='avnadmin',
-    password='AVNS__fo0UaS4td-3yq5ZLNr',
-    database='defaultdb',
-    port=13658
-)
+# =========================
+# ROUTES
+# =========================
 
-cursor = db.cursor()
-
-
-@app.route('/features')
-def features():
-   return render_template('features.html')
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 
 @app.route('/about')
 def about():
-    # Query to get the total number of donations
-    cursor.execute("SELECT COUNT(*) FROM donations")
-    total_donations = cursor.fetchone()[0]  # Fetch the total count
+    db = get_db()
+    cursor = db.cursor()
 
-    # Query to get the count of donations grouped by blood type
+    cursor.execute("SELECT COUNT(*) FROM donations")
+    total_donations = cursor.fetchone()[0]
+
     cursor.execute("SELECT blood_type, COUNT(*) FROM donations GROUP BY blood_type")
-    donation_stats = cursor.fetchall()  # Returns a list of tuples (e.g., [('A+', 10), ('O-', 5)])
-    
-    # Pass the data to the template
+    donation_stats = cursor.fetchall()
+
+    db.close()
     return render_template('about.html', total_donations=total_donations, donation_stats=donation_stats)
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')  # Your About us file name
 
-
-# Route for the "Need Blood" form
-@app.route('/needblood', methods=['GET', 'POST'])
-def need_blood():
-    if request.method == 'POST':
-        # Retrieve form data
-        patient_name = request.form['patient_name']
-        blood_group = request.form['blood_group']
-        contact_number = request.form['contact_number']
-        required_date = request.form['required_date']
-        location = request.form['location']
-        additional_info = request.form.get('additional_info', '')  # Default to empty string if not provided
-
-        # Validate required fields
-        if not patient_name or not blood_group or not contact_number or not required_date or not location:
-            flash('Please fill in all the required fields.', 'error')
-            return redirect('/needblood')
-
-        try:
-            # Prepare the SQL query
-            query = """
-            INSERT INTO need_blood (patient_name, blood_group, contact_number, required_date, location, additional_info)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """
-            # Execute the query
-            cursor.execute(query, (patient_name, blood_group, contact_number, required_date, location, additional_info))
-            db.commit()  # Commit the transaction
-
-            flash('Your blood request has been successfully submitted!', 'success')
-            return redirect('/needblood')
-        except pymysql.MySQLError as e:
-            flash(f'Error inserting data: {e}', 'error')
-            return redirect('/needblood')
-
-    # Render the form for GET request
-    return render_template('needblood.html')
-
-
-# Registration Route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        db = get_db()
+        cursor = db.cursor()
+
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
-        password = request.form['password']  # Plain password
+        password = request.form['password']
 
-        # Save user to database
-        query = "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (name, email, phone, password))
-        db.commit() 
-        
-        # Flash message for successful registration
-        flash("Registration successful! Please log in.", "success")
-        return redirect(url_for('login'))  # Redirect to login page after registration
+        cursor.execute("INSERT INTO users (name, email, phone, password) VALUES (%s,%s,%s,%s)",
+                       (name, email, phone, password))
+        db.commit()
+        db.close()
 
-    return render_template('register.html')  # Render registration form
+        flash("Registered successfully!", "success")
+        return redirect(url_for('login'))
 
-# Login Route
+    return render_template('register.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        db = get_db()
+        cursor = db.cursor()
+
         email = request.form['email']
-        password = request.form['password']  # Plain password input
+        password = request.form['password']
 
-        # Check if user exists
-        query = "SELECT id, name, password FROM users WHERE email = %s"
-        cursor.execute(query, (email,))
+        cursor.execute("SELECT id, name, password FROM users WHERE email=%s", (email,))
         user = cursor.fetchone()
+        db.close()
 
-        if user and user[2] == password:  # Compare input password with database password
-            session['user_id'] = user[0]  # Save user ID in session
-            session['username'] = user[1]  # Save username in session
-            
-            # Flash success message after successful login
-            flash("Login successfully! ")
-
-            return redirect(url_for('dashboard'))  # Redirect to dashboard on successful login
+        if user and user[2] == password:
+            session['user_id'] = user[0]
+            session['username'] = user[1]
+            return redirect(url_for('dashboard'))
         else:
-            flash("Invalid credentials, please try again.", "error")  # Flash message for invalid credentials  
+            flash("Invalid credentials", "error")
 
     return render_template('login.html')
 
 
-# Disable caching to prevent back button from showing error
-@app.after_request
-def add_no_cache_headers(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    return response
-
-
-# Dashboard Route
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' in session:
-        username = session.get('username')  # Fetch the username from the session
-        return render_template('dashboard.html', username=username)
-        
-    
-    else:
-        return redirect(url_for('login'))  # Redirect to login page if not logged in
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return render_template('dashboard.html', username=session['username'])
 
 
-# Flask-Mail configuration (only needed once in your app)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'bloodbanksystem018@gmail.com'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'mthk qeas wvua eomo'  # Replace with your email account password
-app.config['MAIL_DEFAULT_SENDER'] = 'bloodbanksystem018@gmail.com'  # Sender email
-mail = Mail(app)
-
-
-
-
-
-# Blood donation route
 @app.route('/donate_blood', methods=['POST'])
 def donate_blood():
-    if 'user_id' in session:
-        # Retrieve form data
-        name = request.form['name']
-        email = request.form['email']  # User's email entered in the form
-        phone = request.form['phone']
-        gender = request.form['gender']
-        age = request.form['age']
-        blood_type = request.form['blood-type']
-        address = request.form['address']
-        last_donation = request.form['last-donation']
-
-        # Insert the data into the database
-        query = """
-        INSERT INTO donations 
-        (name, email, phone, gender, age, blood_type, address, last_donation, user_id) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(query, (name, email, phone, gender, age, blood_type, address, last_donation, session['user_id']))
-        db.commit()
-
-        # Send email notification
-        try:
-            msg = Message(
-                subject="Blood Donation Confirmation",
-                recipients=[email]  # Email entered by the user in the form
-            )
-            msg.body = f"""
-            Dear {name},
-
-            Thank you for donating blood! Your generous contribution can save lives. 
-            We have successfully recorded your donation details. 
-            You are eligible to donate blood again after 3 months, and we will notify you when the time comes.
-
-            Donation Details:
-            - Name: {name}
-            - Blood Type: {blood_type}
-            - Last Donation Date: {last_donation}
-
-            Thank you for being a lifesaver!
-
-            Best regards,
-            Blood Bank Team
-            """
-            mail.send(msg)
-            flash("Blood donation successful! We will notify you after 3 months.", "success")
-        except Exception as e:
-            flash(f"Donation successful, but email notification failed: {str(e)}", "warning")
-
-        # Redirect to the dashboard
-        return redirect(url_for('dashboard'))
-    else:
-        flash("Please log in to access this feature.", "danger")
+    if 'user_id' not in session:
         return redirect(url_for('login'))
 
+    db = get_db()
+    cursor = db.cursor()
 
-# Search Donors Route
-@app.route('/search_donors', methods=['GET', 'POST'])
-def search_donors():
-    if 'user_id' in session:  # Ensure the user is logged in
-        donors = None
-        blood_type = None
-        location = None
+    name = request.form['name']
+    email = request.form['email']
+    blood_type = request.form['blood-type']
 
-        if request.method == 'POST':
-            # Get form inputs
-            blood_type = request.form.get('blood-type')
-            location = request.form.get('location', '').strip()
+    cursor.execute(
+        "INSERT INTO donations (name,email,blood_type,user_id) VALUES (%s,%s,%s,%s)",
+        (name, email, blood_type, session['user_id'])
+    )
+    db.commit()
+    db.close()
 
-            # Build query
-            query = "SELECT name, email, phone, blood_type, address FROM donations WHERE blood_type = %s"
-            params = [blood_type]
+    # Email
+    try:
+        msg = Message("Donation Successful", recipients=[email])
+        msg.body = f"Thank you {name} for donating blood!"
+        mail.send(msg)
+    except:
+        pass
 
-            if location:
-                query += " AND address LIKE %s"
-                params.append(f"%{location}%")
+    flash("Donation successful", "success")
+    return redirect(url_for('dashboard'))
 
-            # Execute query
-            cursor.execute(query, params)
-            donors = cursor.fetchall()  # Fetch matching rows
 
-        # Render the search form and results
-        return render_template('dashboard.html', donors=donors, blood_type=blood_type, location=location, username=session.get('username'))
-    else:
-        # Redirect to login if user is not authenticated
-        return redirect(url_for('login'))
-
-#added code of email alert after user fill the request blood form
-@app.route('/request_blood', methods=['POST'])
-def request_blood():
-    if 'user_id' in session:
-        name = request.form['name']
-        blood_type = request.form['blood-type']
-        hospital = request.form['hospital']
-        urgency = request.form['urgency']
-        email = request.form['email']
-        query = "INSERT INTO blood_requests (name, blood_type, hospital, urgency, user_id) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(query, (name, blood_type, hospital, urgency, session['user_id']))
-        db.commit()
-        try:
-            msg = Message(
-                subject="Blood Request Confirmation",
-                recipients=[email]
-            )
-            msg.body = f"""
-            Dear {name},
-            Your blood request has been successfully submitted.
-            Request Details:
-            - Name: {name}
-            - Blood Type: {blood_type}
-            - Hospital: {hospital}
-            - Urgency: {urgency}
-            We will notify donors in your area and update you soon.
-            Best regards,
-            Blood Bank Team
-            """
-            mail.send(msg)
-            flash("Blood request submitted successfully! An email confirmation has been sent.", "success")
-        except Exception as e:
-            flash(f"Blood request submitted, but email notification failed: {str(e)}", "warning")
-        return redirect(url_for('dashboard'))
-# Blood Exchange Route
-@app.route('/exchange_blood', methods=['POST'])
-def exchange_blood():
-    if 'user_id' in session:
-        name = request.form['name']
-        blood_type = request.form['blood-type']
-        reason = request.form['reason']
-
-        query = "INSERT INTO blood_exchanges (name, blood_type, reason, user_id) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (name, blood_type, reason, session['user_id']))
-        db.commit()
-        flash("Blood exchange request submitted!", "success")
-        return redirect(url_for('dashboard'))
-        
-
-# Disable caching to prevent back button from showing dashboard after logout
-@app.after_request
-def add_no_cache_headers(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    return response
-
-# Logout Route
 @app.route('/logout')
 def logout():
-    session.clear()  # Clear all session data
-    flash("You have been logged out successfully.", "success")
-    return redirect(url_for('login'))  # Redirect to login after logout
+    session.clear()
+    return redirect(url_for('login'))
 
-# debug on host or port 80
+
+# =========================
+# 🚀 RUN (Koyeb Compatible)
+# =========================
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
