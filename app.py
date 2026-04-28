@@ -97,5 +97,4 @@ def add_no_cache_headers(response):
     return response
 
 # Koyeb compatible run
-if __name__ == "__main__":
-    gunicorn app:app --bind 0.0.0.0:$PORT
+if __name__ == "__main__": app.run(port=5000)
