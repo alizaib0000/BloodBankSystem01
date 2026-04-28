@@ -98,4 +98,4 @@ def add_no_cache_headers(response):
 
 # Koyeb compatible run
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+    gunicorn app:app --bind 0.0.0.0:$PORT
